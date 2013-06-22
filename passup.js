@@ -47,3 +47,5 @@ for (i in config.passwords) {
         });
     }
 }
+
+console.log("Finished updating.\n");
