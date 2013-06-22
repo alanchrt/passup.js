@@ -6,6 +6,10 @@ exports.config = {
                 {
                     "adapter": "amazon",
                     "login": "user@email.com"
+                },
+                {
+                    "adapter": "github",
+                    "login": "username"
                 }
             ]
         },
