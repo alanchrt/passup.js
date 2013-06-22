@@ -9,8 +9,7 @@ Passup includes simple adapters for major websites and uses a headless web brows
 
 **WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation and API is the __envisioned__ API and not yet functional. To use Passup.js now and contribute adapters, use the command `casperjs passup.js`.**
 
-Contributions Encouraged
-------------------------
+### Contributions Encouraged
 
 The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.
 
