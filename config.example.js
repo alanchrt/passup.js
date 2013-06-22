@@ -10,6 +10,10 @@ exports.config = {
                 {
                     "adapter": "github",
                     "login": "username"
+                },
+                {
+                    "adapter": "google",
+                    "login": "user@email.com"
                 }
             ]
         },
