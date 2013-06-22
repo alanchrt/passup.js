@@ -8,6 +8,19 @@ exports.config = {
                     "login": "user@email.com"
                 }
             ]
+        },
+        {
+            "name": "mobile-friendly",
+            "sites": [
+                {
+                    "adapter": "facebook",
+                    "login": "user@email.com"
+                },
+                {
+                    "adapter": "hackerNews",
+                    "login": "username"
+                }
+            ]
         }
     ]
 };
