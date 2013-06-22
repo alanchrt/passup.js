@@ -1,3 +1,4 @@
+system = require('system');
 casper = require('casper').create();
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
@@ -17,11 +18,22 @@ for (i in config.passwords) {
         adapter = require('./adapters/' + site.adapter).adapter;
         console.log("Updating " + adapter.name + "...");
 
+        // Request passwords
+        system.stdout.writeLine("Old password: ");
+        var oldPassword = system.stdin.readLine();
+        system.stdout.writeLine("New password: ");
+        var newPassword = system.stdin.readLine();
+
         // Add steps to stack
         casper.start(adapter.start);
         for (k in adapter.steps) {
+            var data = {
+                site: site,
+                oldPassword: oldPassword,
+                newPassword: newPassword
+            };
             casper.then(function() {
-                adapter.steps[k](this, site);
+                adapter.steps[k](this, data);
             });
         }
 
