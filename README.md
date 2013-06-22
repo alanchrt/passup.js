@@ -53,7 +53,7 @@ Use `npm` to install Passup.js and the `passup` command:
 
 Then create a configuration file for your passwords:
 
-    $ make config
+    $ passup config
 
 This command will create an example configuration in `~/.passup.js`. Open the file in your text editor of choice and configure to your liking.
 
