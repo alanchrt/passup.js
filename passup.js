@@ -4,7 +4,7 @@ require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
 // Set the user agent to something normal
-casper.userAgent('Mozilla/5.0 (Windows; U; MSIE 9.0; Windows NT 9.0; en-US)');
+casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 
 // Iterate through password groups
 for (i in config.passwords) {
