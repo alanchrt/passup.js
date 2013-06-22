@@ -40,7 +40,9 @@ for (i in config.passwords) {
         });
 
         // Run casper
-        casper.run();
-        console.log("Done.\n");
+        casper.run(function() {
+            console.log("Done.\n");
+            this.exit();
+        });
     }
 }
