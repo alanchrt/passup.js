@@ -1,7 +1,7 @@
 exports.config = {
     "passwords": [
         {
-            "name": "Secure",
+            "name": "secure",
             "sites": [
                 {
                     "adapter": "amazon",
