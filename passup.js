@@ -19,23 +19,20 @@ for (i in config.passwords) {
         console.log("Updating " + adapter.name + "...");
 
         // Request passwords
-        system.stdout.writeLine("Old password: ");
-        var oldPassword = system.stdin.readLine();
-        system.stdout.writeLine("New password: ");
-        var newPassword = system.stdin.readLine();
+        system.stdout.write("Old password: ");
+        var oldPassword = system.stdin.readLine().trim();
+        system.stdout.write("New password: ");
+        var newPassword = system.stdin.readLine().trim();
 
-        // Add steps to stack
-        casper.start(adapter.start);
-        for (k in adapter.steps) {
-            var data = {
-                site: site,
-                oldPassword: oldPassword,
-                newPassword: newPassword
-            };
-            casper.then(function() {
-                adapter.steps[k](this, data);
-            });
-        }
+        // Set up data
+        var data = {
+            site: site,
+            oldPassword: oldPassword,
+            newPassword: newPassword
+        };
+
+        // Run the adapter update method
+        adapter.update(data);
 
         // Capture a screenshot
         casper.then(function() {

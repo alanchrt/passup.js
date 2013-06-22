@@ -5,8 +5,7 @@ exports.config = {
             "sites": [
                 {
                     "adapter": "amazon",
-                    "login": "user@email.com",
-                    "password": "password"
+                    "login": "user@email.com"
                 }
             ]
         }
