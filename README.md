@@ -1,4 +1,4 @@
 passup.js
 =========
 
-Passup.js is a password updater build on top of CasperJS and PhantomJS.
+Passup.js is a password updater built on CasperJS and PhantomJS.
