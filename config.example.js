@@ -26,6 +26,15 @@ exports.config = {
             ]
         },
         {
+            "name": "alphanumeric-secure",
+            "sites": [
+                {
+                    "adapter": "enomCentral",
+                    "login": "username"
+                }
+            ]
+        },
+        {
             "name": "mobile-friendly",
             "sites": [
                 {
