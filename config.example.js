@@ -18,6 +18,10 @@ exports.config = {
                 {
                     "adapter": "heroku",
                     "login": "user@email.com"
+                },
+                {
+                    "adapter": "namecheap",
+                    "login": "username"
                 }
             ]
         },
