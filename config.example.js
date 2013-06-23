@@ -12,11 +12,11 @@ exports.config = {
                     "login": "username"
                 },
                 {
-                    "adapter": "heroku",
-                    "login": "user@email.com"
-                }
-                {
                     "adapter": "google",
+                    "login": "user@email.com"
+                },
+                {
+                    "adapter": "heroku",
                     "login": "user@email.com"
                 }
             ]
@@ -30,6 +30,10 @@ exports.config = {
                 },
                 {
                     "adapter": "hackerNews",
+                    "login": "username"
+                },
+                {
+                    "adapter": "instagram",
                     "login": "username"
                 }
             ]
