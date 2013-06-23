@@ -1,7 +1,7 @@
 Passup.js
 =========
 
-Security experts recommend updating account passwords frequently to mitigate the damage inflicted by a compromised password. However, most of us maintain so many web accounts that we've hardly updated a handful of passwords before it's time to rotate again. This results in several inconsistent versions of each password floating around until we find the time to update older ones, and the process begins again.
+Security experts recommend updating account passwords frequently to mitigate the damage inflicted by a compromised password. However, most of us maintain so many web accounts that we've hardly updated a handful of passwords before it's time to rotate again.
 
 **Passup.js** is a password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.
 
