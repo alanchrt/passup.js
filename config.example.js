@@ -22,6 +22,10 @@ exports.config = {
                 {
                     "adapter": "namecheap",
                     "login": "username"
+                },
+                {
+                    "adapter": "rackspaceCloud",
+                    "login": "username"
                 }
             ]
         },
