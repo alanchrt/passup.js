@@ -12,6 +12,10 @@ exports.config = {
                     "login": "username"
                 },
                 {
+                    "adapter": "heroku",
+                    "login": "user@email.com"
+                }
+                {
                     "adapter": "google",
                     "login": "user@email.com"
                 }
