@@ -24,6 +24,10 @@ exports.config = {
                     "login": "username"
                 },
                 {
+                    "adapter": "openredis",
+                    "login": "user@email.com"
+                }
+                {
                     "adapter": "rackspaceCloud",
                     "login": "username"
                 }
