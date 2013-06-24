@@ -39,14 +39,14 @@ Security experts recommend updating account passwords frequently to mitigate the
 
 Passup includes simple adapters for major websites and uses a headless web browser to automate the process of changing your passwords. Passup allows you to configure a list of sites you use for each password and update each group of sites by typing the password only once. So, for example, if you use the same password for all your social media sites and throwaway accounts, you can bulk update them with a single command.
 
-**WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation and API is the __envisioned__ API and not yet functional. To use Passup.js now and contribute adapters, use the command `casperjs passup.js`.**
-
 ### Contributors Needed
 
 The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.
 
 Getting Started
 ---------------
+
+**WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation on the installation and CLI is the envisioned API and not yet functional. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs passup.js`. Passup currently expects a file named `config.js` in the root of the repo that matches the format in `config.example.js`.**
 
 ### Installation
 
