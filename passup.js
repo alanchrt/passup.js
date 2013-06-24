@@ -33,7 +33,7 @@ for (i in config.passwords) {
 
     } while (!matching);
 
-    Iterate over sites that use the password
+    // Iterate over sites that use the password
     for (j in password.sites) {
         // Load the site adapter
         var site = password.sites[j];
