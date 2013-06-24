@@ -11,18 +11,33 @@ for (i in config.passwords) {
     var password = config.passwords[i];
     console.log("\nSetting \"" + password.name + "\" password...\n");
 
-    // Request password
+    // Request old password
     system.stdout.write("Old password: ");
     var oldPassword = system.stdin.readLine().trim();
-    system.stdout.write("New password: ");
-    var newPassword = system.stdin.readLine().trim();
-    system.stdout.write("\n");
+    do {
+        // Request new password
+        var matching = true;
+        system.stdout.write("New password: ");
+        var newPassword = system.stdin.readLine().trim();
+        system.stdout.write("\n");
 
-    // Iterate over sites that use the password
+        // Check regular expressions
+        for (j in password.sites) {
+            var site = password.sites[j];
+            var adapter = require('./adapters/' + site.adapter).adapter;
+            if (!newPassword.match(adapter.passwordRegExp)) {
+                console.log("Password does not match " + adapter.name + " regex " + adapter.passwordRegExp.toString() + ".");
+                matching = false;
+            }
+        }
+
+    } while (!matching);
+
+    Iterate over sites that use the password
     for (j in password.sites) {
         // Load the site adapter
         var site = password.sites[j];
-        adapter = require('./adapters/' + site.adapter).adapter;
+        var adapter = require('./adapters/' + site.adapter).adapter;
         console.log("Updating " + adapter.name + "...");
 
         // Set up data
