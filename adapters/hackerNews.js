@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Hacker News",
-    "passwordRegExp": /\w/, // at least 8 characters
+    "passwordRegExp": /^.{8,}$/, // at least 8 characters
     "update": function(data) {
         casper.start('https://news.ycombinator.com/newslogin');
 
