@@ -1,19 +1,19 @@
 exports.config = {
     "passwords": [
         {
-            "name": "secure",
+            "name": "development",
             "sites": [
                 {
                     "adapter": "amazon",
                     "login": "user@email.com"
                 },
                 {
-                    "adapter": "github",
+                    "adapter": "enomCentral",
                     "login": "username"
                 },
                 {
-                    "adapter": "google",
-                    "login": "user@email.com"
+                    "adapter": "github",
+                    "login": "username"
                 },
                 {
                     "adapter": "heroku",
@@ -26,7 +26,7 @@ exports.config = {
                 {
                     "adapter": "openredis",
                     "login": "user@email.com"
-                }
+                },
                 {
                     "adapter": "rackspaceCloud",
                     "login": "username"
@@ -34,16 +34,16 @@ exports.config = {
             ]
         },
         {
-            "name": "alphanumeric-secure",
+            "name": "productivity",
             "sites": [
                 {
-                    "adapter": "enomCentral",
-                    "login": "username"
+                    "adapter": "google",
+                    "login": "user@email.com"
                 }
             ]
         },
         {
-            "name": "mobile-friendly",
+            "name": "social",
             "sites": [
                 {
                     "adapter": "facebook",
