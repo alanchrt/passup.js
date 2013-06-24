@@ -89,7 +89,7 @@ A simple `~/.passup.js` configuration looks something like this:
                 "name": "github-secure",
                 "sites": [
                     {
-                        "adapter": "github-secure",
+                        "adapter": "github",
                         "login": "username"
                     }
                 ]
