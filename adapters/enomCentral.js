@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "eNom Central",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^[A-Za-z0-9\*@\-_\.\/]{6,20}$/, // 6-20 characters, alphanumeric, a few special characters
     "update": function(data) {
         casper.start('https://www.enomcentral.com/login.aspx');
 
