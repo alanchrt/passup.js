@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Facebook",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.{6,}$/, // 6 or more characters
     "update": function(data) {
         casper.start('https://www.facebook.com/');
 
