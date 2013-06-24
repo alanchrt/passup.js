@@ -178,3 +178,11 @@ If you need additional data in your update function, be sure to include it in th
     }
 
 When you're relatively sure your adapter works reliably, send a pull request and it will be added to the repository to be shared with other users.
+
+To-Do
+-----
+
+* Create `npm` package with `passup` command and publish to registry.
+* Add CLI arguments.
+* Break adapters into separate repository for updating separate from passup utility.
+* Add error handling for failed attempts, with screenshot capture.
