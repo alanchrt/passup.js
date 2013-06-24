@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Namecheap",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.*$/,
     "update": function(data) {
         casper.start('https://www.namecheap.com/myaccount/login-only.aspx');
 

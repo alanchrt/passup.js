@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "GitHub",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.*$/,
     "update": function(data) {
         casper.start('https://github.com/login');
 

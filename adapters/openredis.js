@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Openredis",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.*$/,
     "update": function(data) {
         casper.start('https://openredis.com/login');
 

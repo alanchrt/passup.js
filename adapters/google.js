@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Google",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.{8,}$/, // at least 8 characters
     "update": function(data) {
         casper.start('https://accounts.google.com/ServiceLogin');
 

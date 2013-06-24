@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Instagram",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.*$/,
     "update": function(data) {
         casper.start('https://instagram.com/accounts/login/');
 

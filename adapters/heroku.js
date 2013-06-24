@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Heroku",
-    "passwordRegExp": /\w/,
+    "passwordRegExp": /^.*$/,
     "update": function(data) {
         casper.start('https://id.heroku.com/login');
 
