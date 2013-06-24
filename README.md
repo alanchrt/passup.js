@@ -41,7 +41,7 @@ Passup includes simple adapters for major websites and uses a headless web brows
 
 **WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation and API is the __envisioned__ API and not yet functional. To use Passup.js now and contribute adapters, use the command `casperjs passup.js`.**
 
-### Contributions Encouraged
+### Contributors Needed
 
 The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.
 
@@ -50,7 +50,7 @@ Getting Started
 
 ### Installation
 
-Use `npm` to install Passup.js and the `passup` command:
+Use `npm` to install:
 
     $ npm install -g passup.js
 
@@ -107,8 +107,9 @@ Each site specifies an adapter, which is simply the adapter filename without the
 
 ### Updating Passwords
 
-To update all of your passwords, issue the `passup` command:
+Make sure you have the latest adapters, then issue the `passup` command to update all of your passwords:
 
+    $ passup update
     $ passup
 
 To update only a single password group, call `passup` like this:
