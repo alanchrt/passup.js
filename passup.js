@@ -26,7 +26,7 @@ for (i in config.passwords) {
             var site = password.sites[j];
             var adapter = require('./adapters/' + site.adapter).adapter;
             if (!newPassword.match(adapter.passwordRegExp)) {
-                console.log("Password does not match " + adapter.name + " regex " + adapter.passwordRegExp.toString() + ".");
+                console.log("Password does not match " + adapter.name + " regexp " + adapter.passwordRegExp.toString() + ".");
                 matching = false;
             }
         }
