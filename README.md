@@ -10,16 +10,26 @@ Security experts recommend updating account passwords frequently to mitigate the
 
     $ passup
     
-    Setting "secure" password...
+    Setting "amazon-secure" password...
 
-    Old password: myoldpass
-    New password: mynewpass
+    Old password: myoldamazonpass
+    New password: mynewamazonpass
 
     Updating Amazon...
     Done.
+    
+    Setting "github-secure" password...
+
+    Old password: myoldgithubpass
+    New password: mynewgithubpass
 
     Updating GitHub...
     Done.
+    
+    Setting "google-secure" password...
+
+    Old password: myoldgooglepass
+    New password: mynewgooglepass
 
     Updating Google...
     Done.
@@ -67,16 +77,26 @@ A simple `~/.passup.js` configuration looks something like this:
     exports.config = {
         "passwords": [
             {
-                "name": "secure",
+                "name": "amazon-secure",
                 "sites": [
                     {
                         "adapter": "amazon",
                         "login": "user@email.com"
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "github-secure",
+                "sites": [
                     {
-                        "adapter": "github",
+                        "adapter": "github-secure",
                         "login": "username"
-                    },
+                    }
+                ]
+            },
+            {
+                "name": "google-secure",
+                "sites": [
                     {
                         "adapter": "google",
                         "login": "user@email.com"
@@ -99,7 +119,7 @@ A simple `~/.passup.js` configuration looks something like this:
         ]
     };
 
-In this example, we've specified two passwords -- "secure" and "mobile-friendly." Password names must include only alphanumeric characters, dashes, and underscores.
+In this example, we've specified four passwords -- "amazon-secure," "github-secure," "google-secure," and "mobile-friendly." Password names must include only alphanumeric characters, dashes, and underscores.
 
 Passwords contain a list of the sites that use that password. To get started, you'll want to group your sites together with passwords as you already use them, or you'll want to update your web account passwords to match your configuration. Basically, just make sure that when you start, your password groups specified here match how you actually have the passwords set so things don't get out of sync. It's recommended to include only a single site for each password you truly want to be secure, so you aren't using the same password on two sensitive sites -- in the event that one gets compromised.
 
