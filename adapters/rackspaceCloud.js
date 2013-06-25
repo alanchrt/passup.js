@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Rackspace Cloud",
-    "passwordRegExp": /^.*$/,
+    "passwordRegExp": /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*$/, // 8-19 characters, 1 upper, 1 lower, 1 number
     "update": function(data) {
         casper.start('https://manage.rackspacecloud.com/pages/Login.jsp');
         casper.viewport(1024, 768);
