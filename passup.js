@@ -1,6 +1,5 @@
 system = require('system');
 casper = require('casper').create();
-stdin = require('stdin');
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
@@ -25,7 +24,6 @@ console.log("Passup.js -- version 0.1.0\n");
 for (i in config.passwords) {
     // Request old password
     var password = config.passwords[i];
-
     system.stdout.write("Old \"" + password.name + "\" password: ");
     var oldPassword = system.stdin.readLine().trim();
     
