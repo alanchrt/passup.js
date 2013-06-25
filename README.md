@@ -9,43 +9,34 @@ Security experts recommend updating account passwords frequently to mitigate the
 **Passup.js** is a password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.
 
     $ passup
+    Passup.js -- version 0.1.0
     
-    Setting "amazon-secure" password...
+    Old "amazon-secure" password: myoldamazonpass
+    New "amazon-secure" password: mynewamazonpass
 
-    Old password: myoldamazonpass
-    New password: mynewamazonpass
+    Old "github-secure" password: myoldgithubpass
+    New "github-secure" password: mynewgithubpass
+
+    Old "google-secure" password: myoldgooglepass
+    New "google-secure" password: mynewgooglepass
+
+    Old "mobile-friendly" password: myoldthrowaway
+    New "mobile-friendly" password: mynewthrowaway
 
     Updating Amazon...
     Done.
     
-    Setting "github-secure" password...
-
-    Old password: myoldgithubpass
-    New password: mynewgithubpass
-
     Updating GitHub...
     Done.
     
-    Setting "google-secure" password...
-
-    Old password: myoldgooglepass
-    New password: mynewgooglepass
-
     Updating Google...
     Done.
-
-    Setting "mobile-friendly" password...
-
-    Old password: myoldthrowaway
-    New password: mynewthrowaway
 
     Updating Facebook...
     Done.
 
     Updating Hacker News...
     Done.
-
-    Finished updating.
 
 Passup includes simple adapters for major websites and uses a headless web browser to automate the process of changing your passwords. Passup allows you to configure a list of sites you use for each password and update each group of sites by typing the password only once. So, for example, if you use the same password for all your social media sites and throwaway accounts, you can bulk update them with a single command.
 
