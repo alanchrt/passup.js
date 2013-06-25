@@ -1,5 +1,6 @@
 system = require('system');
 casper = require('casper').create();
+colorizer = require('colorizer').create('Colorizer');
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
@@ -18,32 +19,35 @@ function PasswordUpdate() {
 }
 
 // Greeting
-console.log("Passup.js -- version 0.1.0\n");
+casper.echo("Passup.js -- version 0.1.0\n", 'COMMENT');
 
 // Request password changes for each password
 for (i in config.passwords) {
     // Request old password
     var password = config.passwords[i];
-    system.stdout.write("Old \"" + password.name + "\" password: ");
+    casper.echo("Old password " + colorizer.colorize(password.name, 'PARAMETER') + ":");
     var oldPassword = system.stdin.readLine().trim();
     
     do {
         // Request new password
         var matching = true;
-        system.stdout.write("New \"" + password.name + "\" password: ");
+        casper.echo("New password " + colorizer.colorize(password.name, 'PARAMETER') + ":");
         var newPassword = system.stdin.readLine().trim();
-        system.stdout.write("\n");
         
         // Check regular expressions
         for (j in password.sites) {
             var site = password.sites[j];
             var adapter = require('./adapters/' + site.adapter).adapter;
             if (!newPassword.match(adapter.passwordRegExp)) {
-                console.log("Password does not match " + adapter.name + " regexp " + adapter.passwordRegExp.toString() + ".");
+                casper.echo(colorizer.colorize("Password does not match " + adapter.name + " regexp ", 'WARNING') +
+                            colorizer.colorize(adapter.passwordRegExp.toString(), 'PARAMETER') +
+                            colorizer.colorize(".", 'WARNING'));
                 matching = false;
             }
         }
+        if (!matching) system.stdout.write("\n");
     } while (!matching);
+    system.stdout.write("\n")
 
     // Add updates to the queue
     for (j in password.sites) {
@@ -64,13 +68,21 @@ for (i in config.passwords) {
 var update = function() {
     // Exit on empty queue
     if (update_queue.length == 0) {
+        // Print totals
+        var password_count = config.passwords.length;
+        var site_count = 0;
+        for (i in config.passwords) site_count += config.passwords[i].sites.length;
+        casper.echo("Finished updating " + password_count + " password(s) on " + site_count + " site(s).\n", 'INFO_BAR');
+
+        // End execution
         casper.exit();
         return;
     }
 
     // Get the next update
     var current_update = update_queue.shift();
-    console.log("Updating " + current_update.adapter.name + "...");
+    casper.echo(colorizer.colorize("UPDATING ", 'COMMENT') +
+                colorizer.colorize(current_update.adapter.name, 'PARAMETER'));
 
     // Set up data
     var data = {
@@ -89,10 +101,15 @@ var update = function() {
 
     // Run casper
     casper.run(function() {
-        console.log("Done.\n");
+        casper.echo("\nDone.\n", 'INFO');
         update();
     });
 }
+
+// Show dots as steps are completed
+casper.on('step.complete', function(resource) {
+    system.stdout.write('.');
+});
 
 // Update the passwords
 update();
