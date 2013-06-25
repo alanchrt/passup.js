@@ -71,6 +71,10 @@ exports.config = {
                     "login": "username"
                 },
                 {
+                    "adapter": "linkedin",
+                    "login": "user@email.com"
+                },
+                {
                     "adapter": "reddit",
                     "login": "username"
                 },
