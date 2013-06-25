@@ -6,21 +6,34 @@ config = require('./config').config;
 // Set the user agent to something normal
 casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 
-// Iterate through password groups
-for (i in config.passwords) {
-    var password = config.passwords[i];
-    console.log("\nSetting \"" + password.name + "\" password...\n");
+// Create an empty queue for updates
+var update_queue = [];
 
+// Individual password update object
+function PasswordUpdate() {
+    this.site = {};
+    this.adapter = {};
+    this.oldPassword = '';
+    this.newPassword = '';
+}
+
+// Greeting
+console.log("Passup.js -- version 0.1.0\n");
+
+// Request password changes for each password
+for (i in config.passwords) {
     // Request old password
-    system.stdout.write("Old password: ");
+    var password = config.passwords[i];
+    system.stdout.write("Old \"" + password.name + "\" password: ");
     var oldPassword = system.stdin.readLine().trim();
+    
     do {
         // Request new password
         var matching = true;
-        system.stdout.write("New password: ");
+        system.stdout.write("New \"" + password.name + "\" password: ");
         var newPassword = system.stdin.readLine().trim();
         system.stdout.write("\n");
-
+        
         // Check regular expressions
         for (j in password.sites) {
             var site = password.sites[j];
@@ -30,35 +43,56 @@ for (i in config.passwords) {
                 matching = false;
             }
         }
-
     } while (!matching);
 
-    // Iterate over sites that use the password
+    // Add updates to the queue
     for (j in password.sites) {
-        // Load the site adapter
         var site = password.sites[j];
         var adapter = require('./adapters/' + site.adapter).adapter;
-        console.log("Updating " + adapter.name + "...");
 
-        // Set up data
-        var data = {
-            site: site,
-            oldPassword: oldPassword,
-            newPassword: newPassword
-        };
+        var update = new PasswordUpdate();
+        update.site = site;
+        update.adapter = adapter;
+        update.oldPassword = oldPassword;
+        update.newPassword = newPassword;
 
-        // Run the adapter update method
-        adapter.update(data);
-
-        // Capture a screenshot
-        casper.then(function() {
-            this.capture('output.png');
-        });
-
-        // Run casper
-        casper.run(function() {
-            console.log("Done.\n");
-            this.exit();
-        });
+        update_queue.push(update);
     }
 }
+
+// Recursive update method
+var update = function() {
+    // Exit on empty queue
+    if (update_queue.length == 0) {
+        casper.exit();
+        return;
+    }
+
+    // Get the next update
+    var current_update = update_queue.shift();
+    console.log("Updating " + current_update.adapter.name + "...");
+
+    // Set up data
+    var data = {
+        site: current_update.site,
+        oldPassword: current_update.oldPassword,
+        newPassword: current_update.newPassword
+    };
+
+    // Run the adapter update method
+    current_update.adapter.update(data);
+
+    // Capture a screenshot
+    casper.then(function() {
+        this.capture('output.png');
+    });
+
+    // Run casper
+    casper.run(function() {
+        console.log("Done.\n");
+        update();
+    });
+}
+
+// Update the passwords
+update();
