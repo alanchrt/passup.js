@@ -2,7 +2,7 @@ system = require('system');
 casper = require('casper').create();
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
-
+fs = require('fs'); //phantomjs file system module
 // Set the user agent to something normal
 casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 
@@ -79,12 +79,21 @@ var update = function() {
         newPassword: current_update.newPassword
     };
 
+    //prepare screenshot name and create directories if neccessary
+    var dt = new Date();
+    var img_folder_name = "screenshots/"+dt.getFullYear() + "-" + (dt.getMonth() + 1) + "-" + dt.getDate();
+    var full_image_name = img_folder_name+"/"+current_update.site.adapter+".png";
+    if(!fs.isDirectory(img_folder_name)){
+        fs.makeTree(img_folder_name)
+    }
+    console.log(full_image_name);
+
     // Run the adapter update method
     current_update.adapter.update(data);
 
     // Capture a screenshot
     casper.then(function() {
-        this.capture('output.png');
+        this.capture(full_image_name);
     });
 
     // Run casper
