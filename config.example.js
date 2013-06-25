@@ -4,10 +4,6 @@ exports.config = {
             "name": "development",
             "sites": [
                 {
-                    "adapter": "amazon",
-                    "login": "user@email.com"
-                },
-                {
                     "adapter": "enomCentral",
                     "login": "username"
                 },
@@ -45,6 +41,10 @@ exports.config = {
         {
             "name": "shopping",
             "sites": [
+                {
+                    "adapter": "amazon",
+                    "login": "user@email.com"
+                },
                 {
                     "adapter": "etsy",
                     "login": "username"
