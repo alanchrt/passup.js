@@ -12,10 +12,6 @@ exports.adapter = {
         });
 
         casper.then(function() {
-            this.capture('TwitterAfterLogin.png');
-        });
-
-        casper.then(function() {
             this.open('https://twitter.com/settings/password');
         });
 
@@ -25,11 +21,6 @@ exports.adapter = {
                 'user_password': data.newPassword,
                 'user_password_confirmation': data.newPassword
             },true);
-            this.capture('TwitterFormChange.png');
-        });
-
-        casper.then(function() {
-        	this.capture('TwitterPasswordChanged.png');
         });
     }
 };

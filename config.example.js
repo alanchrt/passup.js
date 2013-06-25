@@ -4,10 +4,6 @@ exports.config = {
             "name": "development",
             "sites": [
                 {
-                    "adapter": "amazon",
-                    "login": "user@email.com"
-                },
-                {
                     "adapter": "enomCentral",
                     "login": "username"
                 },
@@ -43,6 +39,23 @@ exports.config = {
             ]
         },
         {
+            "name": "shopping",
+            "sites": [
+                {
+                    "adapter": "amazon",
+                    "login": "user@email.com"
+                },
+                {
+                    "adapter": "ebay",
+                    "login": "username"
+                },
+                {
+                    "adapter": "etsy",
+                    "login": "username"
+                }
+            ]
+        },
+        {
             "name": "social",
             "sites": [
                 {
@@ -58,7 +71,15 @@ exports.config = {
                     "login": "username"
                 },
                 {
+                    "adapter": "linkedin",
+                    "login": "user@email.com"
+                },
+                {
                     "adapter": "reddit",
+                    "login": "username"
+                },
+                {
+                    "adapter": "twitter",
                     "login": "username"
                 }
             ]
