@@ -43,6 +43,15 @@ exports.config = {
             ]
         },
         {
+            "name": "shopping",
+            "sites": [
+                {
+                    "adapter": "etsy",
+                    "login": "username"
+                }
+            ]
+        },
+        {
             "name": "social",
             "sites": [
                 {
