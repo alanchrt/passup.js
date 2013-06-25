@@ -17,7 +17,6 @@ exports.adapter = {
         );
 
         casper.then(function() {
-            console.log(this.getPageContent());
             content = JSON.parse(this.getPageContent());
             uh = content.json.data.modhash;
         });
