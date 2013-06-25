@@ -60,6 +60,10 @@ exports.config = {
                 {
                     "adapter": "reddit",
                     "login": "username"
+                },
+                {
+                    "adapter": "twitter",
+                    "login": "username"
                 }
             ]
         }
