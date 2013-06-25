@@ -49,6 +49,8 @@ Getting Started
 
 **WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation on the installation and CLI is the envisioned API and not yet functional. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs passup.js`. Passup currently expects a file named `config.js` in the root of the repo that matches the format in `config.example.js`.**
 
+** Make sure your PhantomJS version is 1.9 or greater, since system.stdin and system.stdout support came with version 1.9
+
 ### Installation
 
 Use `npm` to install:

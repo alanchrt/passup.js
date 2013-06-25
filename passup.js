@@ -1,5 +1,6 @@
 system = require('system');
 casper = require('casper').create();
+stdin = require('stdin');
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
@@ -16,14 +17,36 @@ function PasswordUpdate() {
     this.oldPassword = '';
     this.newPassword = '';
 }
+for(var tmp in system){
+    console.log(tmp);
+}
+
+//system.stdout is undefined using mac
+if(system.stdout === undefined){
+    system.stdout = {
+        write:function(_msg){
+            console.log(_msg);
+        }
+    };
+}
+
+if(system.stdin === undefined){
+    system.stdin = stdin;
+}
 
 // Greeting
 console.log("Passup.js -- version 0.1.0\n");
 
 // Request password changes for each password
 for (i in config.passwords) {
+
     // Request old password
     var password = config.passwords[i];
+
+    for(var kkk in password){
+        console.log("dumping ",kkk,"  =>  ",password[kkk]);
+    }
+
     system.stdout.write("Old \"" + password.name + "\" password: ");
     var oldPassword = system.stdin.readLine().trim();
     
