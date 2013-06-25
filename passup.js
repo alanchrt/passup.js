@@ -72,7 +72,7 @@ var update = function() {
         var password_count = config.passwords.length;
         var site_count = 0;
         for (i in config.passwords) site_count += config.passwords[i].sites.length;
-        casper.echo("Finished updating " + password_count + " password(s) on " + site_count + " site(s).\n", 'INFO_BAR');
+        casper.echo("Finished updating " + password_count + " password(s) on " + site_count + " site(s).", 'INFO_BAR');
 
         // End execution
         casper.exit();
