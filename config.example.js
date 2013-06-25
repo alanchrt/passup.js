@@ -56,6 +56,10 @@ exports.config = {
                 {
                     "adapter": "instagram",
                     "login": "username"
+                },
+                {
+                    "adapter": "reddit",
+                    "login": "username"
                 }
             ]
         }
