@@ -46,6 +46,10 @@ exports.config = {
                     "login": "user@email.com"
                 },
                 {
+                    "adapter": "ebay",
+                    "login": "username"
+                },
+                {
                     "adapter": "etsy",
                     "login": "username"
                 }
