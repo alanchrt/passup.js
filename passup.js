@@ -119,7 +119,7 @@ casper.on('step.complete', function(resource) {
 
 // Capture a screenshot after all errors
 casper.on('error', function(msg, backtrace) {
-    casper.echo("Error: " + msg, 'RED_BAR');
+    casper.echo(msg, 'RED_BAR');
     casper.capture('error.png');
 });
 
