@@ -86,7 +86,7 @@ A simple `~/.passup.js` configuration looks something like this:
 
 In this example, we've specified four passwords -- "amazon-secure," "github-secure," "google-secure," and "mobile-friendly." Password names must include only alphanumeric characters, dashes, and underscores.
 
-Passwords contain a list of the sites that use that password. To get started, you'll want to group your sites together with passwords as you already use them, or you'll want to update your web account passwords to match your configuration. Basically, just make sure that when you start, your password groups specified here match how you actually have the passwords set so things don't get out of sync. It's recommended to include only a single site for each password you truly want to be secure, so you aren't using the same password on two sensitive sites -- in the event that one gets compromised.
+Each password contains a list of the sites that use that password. To get started, you'll want to group your sites together with passwords as you already use them, or you'll want to update your web account passwords to match your configuration. Basically, just make sure that when you start, your password groups specified here match how you actually have the passwords set so things don't get out of sync. It's recommended to include only a single site for each password you truly want to be secure, so you aren't using the same password on two sensitive sites -- in the event that one gets compromised.
 
 Each site specifies an adapter, which is simply the adapter filename without the `.js` extension (CommonJS specification). Additionally, sites contain extra data, usually a `login` attribute and zero or more additional parameters needed for login.
 
@@ -167,7 +167,9 @@ When you're relatively sure your adapter works reliably, send a pull request and
 To-Do
 -----
 
-* Create `npm` package with `passup` command and publish to registry.
+* Refactor into modular code base.
+* Settle on test runner and write unit tests (not for update methods in adapters, but for the passup.js core).
+* Create `npm` package with `passup` command and publish to the registry.
 * Add CLI arguments.
 * Break adapters into separate repository for updating separate from passup utility.
 * Add error handling for failed attempts, with screenshot capture.
