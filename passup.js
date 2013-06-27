@@ -7,7 +7,7 @@ require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
 // Require and store adapters
-var adapters = {}
+adapters = {}
 for (i in config.passwords) {
     var password = config.passwords[i];
     for (j in password.sites) {
@@ -17,11 +17,14 @@ for (i in config.passwords) {
     }
 }
 
+// Error flag (definitely need to namespace this stuff)
+error = false;
+
 // Set the user agent to something normal
 casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 
 // Create an empty queue for updates
-var update_queue = [];
+update_queue = [];
 
 // Individual password update object
 function PasswordUpdate() {
@@ -78,7 +81,7 @@ for (i in config.passwords) {
 }
 
 // Recursive update method
-var update = function() {
+update = function() {
     // Exit on empty queue
     if (update_queue.length == 0) {
         // Print totals
@@ -105,6 +108,7 @@ var update = function() {
     };
 
     // Run the adapter update method
+    error = false;
     current_update.adapter.update(data);
 
     // Capture a screenshot
@@ -114,7 +118,8 @@ var update = function() {
 
     // Run casper
     casper.run(function() {
-        casper.echo("\nDone.\n", 'INFO');
+        if (!error)
+            casper.echo("\nDone.\n", 'INFO');
         update();
     });
 }
@@ -126,7 +131,10 @@ casper.on('step.complete', function(resource) {
 
 // Capture a screenshot after all errors
 phantom.onError = function(msg, backtrace) {
+    error = true;
     casper.echo("\n" + msg, 'RED_BAR');
+    system.stdout.write("\n");
+    casper.steps = function() {};
     casper.capture('error.png');
 };
 
