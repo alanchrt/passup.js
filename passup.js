@@ -1,10 +1,6 @@
 system = require('system');
 colorizer = require('colorizer').create('Colorizer');
-
-// Set up the Casper object
-casper = require('casper').create({
-    exitOnError: false
-});
+casper = require('casper').create();
 
 // Patch require and import config
 require = patchRequire(require, ['./adapters']);
@@ -118,10 +114,10 @@ casper.on('step.complete', function(resource) {
 });
 
 // Capture a screenshot after all errors
-casper.on('error', function(msg, backtrace) {
-    casper.echo(msg, 'RED_BAR');
+phantom.onError = function(msg, backtrace) {
+    casper.echo("\n" + msg, 'RED_BAR');
     casper.capture('error.png');
-});
+};
 
 // Update the passwords
 update();
