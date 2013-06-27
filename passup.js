@@ -6,6 +6,17 @@ casper = require('casper').create();
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
+// Require and store adapters
+var adapters = {}
+for (i in config.passwords) {
+    var password = config.passwords[i];
+    for (j in password.sites) {
+        var site = password.sites[j];
+        if (!(site.adapter in adapters))
+            adapters[site.adapter] = require('./adapters/' + site.adapter).adapter;
+    }
+}
+
 // Set the user agent to something normal
 casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 
@@ -39,7 +50,7 @@ for (i in config.passwords) {
         // Check regular expressions
         for (j in password.sites) {
             var site = password.sites[j];
-            var adapter = require('./adapters/' + site.adapter).adapter;
+            var adapter = adapters[site.adapter];
             if (!newPassword.match(adapter.passwordRegExp)) {
                 casper.echo(colorizer.colorize("Password does not match " + adapter.name + " regexp ", 'WARNING') +
                             colorizer.colorize(adapter.passwordRegExp.toString(), 'PARAMETER') +
@@ -54,7 +65,7 @@ for (i in config.passwords) {
     // Add updates to the queue
     for (j in password.sites) {
         var site = password.sites[j];
-        var adapter = require('./adapters/' + site.adapter).adapter;
+        var adapter = adapters[site.adapter];
 
         var update = new PasswordUpdate();
         update.site = site;
