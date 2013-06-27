@@ -59,6 +59,10 @@ exports.config = {
             "name": "social",
             "sites": [
                 {
+                    "adapter": "disqus",
+                    "login": "username"
+                },
+                {
                     "adapter": "facebook",
                     "login": "user@email.com"
                 },
@@ -80,6 +84,10 @@ exports.config = {
                 },
                 {
                     "adapter": "twitter",
+                    "login": "username"
+                },
+                {
+                    "adapter": "wordpress",
                     "login": "username"
                 }
             ]
