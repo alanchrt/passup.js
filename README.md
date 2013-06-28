@@ -173,3 +173,6 @@ To-Do
 * Add CLI arguments.
 * Break adapters into separate repository for updating separate from passup utility.
 * Add error handling for failed attempts, with screenshot capture.
+
+
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/alanctkc/passup.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
