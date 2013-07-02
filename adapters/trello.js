@@ -1,6 +1,6 @@
 exports.adapter = {
     "name": "Trello",
-    "passwordRegExp": /^.{4}$/, // atleast 4 characters long.
+    "passwordRegExp": /^.{4,}$/, // at least 4 characters long.
     "update": function(data) {
         casper.start('https://trello.com/login');
 
