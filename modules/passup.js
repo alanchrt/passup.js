@@ -129,7 +129,7 @@ Passup.prototype.requestUpdates = function() {
         // Ask for new password until it matches site regexps
         var newPassword = '';
         do {
-            newPassword = this.getNewPassword(password.name);
+            newPassword = this.getNewPassword(password);
         } while (!this.checkRegExp(newPassword, password.sites));
         this.io.print("\n");
 
