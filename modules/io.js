@@ -3,14 +3,11 @@ system = require('system');
 // ConsoleIO
 //-----------------------------------------------
 
-function ConsoleIO(colorizer) {
-    // Initialize the colorizer
-    this.colorizer = colorizer;
-}
+function ConsoleIO() {}
 
-ConsoleIO.create = function(colorizer) {
+ConsoleIO.create = function() {
     // Instantiate a new object
-    return new ConsoleIO(colorizer);
+    return new ConsoleIO();
 };
 
 ConsoleIO.prototype.print = function(text) {
@@ -24,7 +21,7 @@ ConsoleIO.prototype.say = function(output) {
     for (var i in output) {
         var chunk = output[i];
         if (chunk.style)
-            string += this.colorizer.colorize(chunk.text, chunk.style);
+            string += colorizer.colorize(chunk.text, chunk.style);
         else
             string += chunk.text;
     }

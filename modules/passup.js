@@ -1,7 +1,7 @@
 // Passup
 //-----------------------------------------------
 
-function Passup(config, colorizer) {
+function Passup(config) {
     // Initialize application
     this.config = config;
     this.adapters = {};
@@ -9,7 +9,7 @@ function Passup(config, colorizer) {
     this.updateCount = 0;
     this.siteCount = 0;
     this.hasError = false;
-    this.io = require('./modules/io').create(colorizer);
+    this.io = require('./modules/io').create();
 
     // Set up imports and bindings
     this.loadAdapters();
@@ -17,9 +17,9 @@ function Passup(config, colorizer) {
     this.bindSteps();
 }
 
-Passup.create = function(config, colorizer) {
+Passup.create = function(config) {
     // Create a new passup object
-    return new Passup(config, colorizer);
+    return new Passup(config);
 };
 
 Passup.prototype.loadAdapters = function() {
