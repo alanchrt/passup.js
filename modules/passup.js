@@ -24,9 +24,9 @@ Passup.create = function(config) {
 
 Passup.prototype.loadAdapters = function() {
     // Load the adapters for sites in the user configuration
-    for(var i in this.config.passwords) {
+    for (var i in this.config.passwords) {
         var password = this.config.passwords[i];
-        for(var j in password.sites) {
+        for (var j in password.sites) {
             var site = password.sites[j];
             if (!(site.adapter in this.adapters))
                 this.adapters[site.adapter] = require('./adapters/' + site.adapter).adapter;
@@ -93,7 +93,7 @@ Passup.prototype.getNewPassword = function(password) {
 Passup.prototype.checkRegExp = function(password, sites) {
     // Verify that the password matches the regexp for all sites
     var matching = true;
-    for(var i in sites) {
+    for (var i in sites) {
         var site = sites[i];
         var adapter = this.adapters[site.adapter];
         if (!password.match(adapter.passwordRegExp)) {
@@ -120,10 +120,15 @@ Passup.prototype.checkRegExp = function(password, sites) {
     return matching;
 };
 
-Passup.prototype.requestUpdates = function() {
+Passup.prototype.requestUpdates = function(passwords) {
     // Retrieve updated passwords
-    for(var i in this.config.passwords) {
+    for (var i in this.config.passwords) {
         var password = this.config.passwords[i];
+
+        // Exclude if password list was specified
+        if (passwords && passwords.indexOf(password.name) === -1) continue;
+
+        // Get the old password
         var oldPassword = this.getOldPassword(password);
 
         // Ask for new password until it matches site regexps
@@ -140,7 +145,7 @@ Passup.prototype.requestUpdates = function() {
 
 Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
     // Create a password update for each of the sites and enqueue it
-    for(var i in sites) {
+    for (var i in sites) {
         var site = sites[i];
 
         var update = new PasswordUpdate();
@@ -212,7 +217,14 @@ Passup.prototype.run = function() {
     }]);
 
     // Retrieve new passwords
-    this.requestUpdates();
+    if (casper.cli.has('password')) {
+        var passwords = casper.cli.get('password').split(',').map(function(password) {
+            return password.trim();
+        });
+        this.requestUpdates(passwords);
+    }
+    else
+        this.requestUpdates();
     this.updateNext();
 };
 
