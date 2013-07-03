@@ -40,11 +40,11 @@ Passup.prototype.bindErrors = function() {
     phantom.onError = function(msg, backtrace) {
         // Show the error
         obj.hasError = true;
-        this.io.say([{
+        obj.io.say([{
             text: "\n" + msg,
             style: 'RED_BAR'
         }]);
-        this.io.print("\n");
+        obj.io.print("\n");
 
         // Clear all the remaining steps
         casper.steps = function() {};
