@@ -3,11 +3,14 @@ system = require('system');
 // ConsoleIO
 //-----------------------------------------------
 
-function ConsoleIO() {}
+function ConsoleIO(colorizer) {
+    // Initialize the colorizer
+    this.colorizer = colorizer;
+}
 
-ConsoleIO.create = function() {
+ConsoleIO.create = function(colorizer) {
     // Instantiate a new object
-    return new ConsoleIO();
+    return new ConsoleIO(colorizer);
 };
 
 ConsoleIO.prototype.print = function(text) {
@@ -18,12 +21,12 @@ ConsoleIO.prototype.print = function(text) {
 ConsoleIO.prototype.say = function(output) {
     // Print the chunks of text using Casper styles
     var string = "";
-    for (i in output) {
+    for (var i in output) {
         var chunk = output[i];
         if (chunk.style)
-            string += colorizer.colorize(chunk.text, chunk.style);
+            string += this.colorizer.colorize(chunk.text, chunk.style);
         else
-            string += text;
+            string += chunk.text;
     }
     casper.echo(string);
 };
@@ -35,4 +38,4 @@ ConsoleIO.prototype.ask = function(output) {
 };
 
 // Export the api
-exports = ConsoleIO;
+module.exports = ConsoleIO;
