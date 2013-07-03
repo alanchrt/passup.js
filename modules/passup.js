@@ -3,20 +3,15 @@ casper = require('casper').create();
 // Passup
 //-----------------------------------------------
 
-function Passup() {
+function Passup(config) {
     // Initialize application
-    this.config = {}
+    this.config = config;
     this.adapters = [];
     this.updateQueue = [];
 
     // Supply Google Chrome user agent
     casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/28.0.1468.0 Safari/537.36');
 }
-
-Passup.prototype.loadConfig = function() {
-    // Load the user configuration
-    this.config = require('./config').config;
-};
 
 Passup.prototype.loadAdapters = function() {
     // Load the adapters for sites in the user configuration
