@@ -18,6 +18,7 @@ function Passup(config, colorizer) {
 }
 
 Passup.create = function(config, colorizer) {
+    // Create a new passup object
     return new Passup(config, colorizer);
 };
 
