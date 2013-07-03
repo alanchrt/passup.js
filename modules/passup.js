@@ -130,6 +130,7 @@ Passup.prototype.requestUpdates = function() {
         do {
             newPassword = this.getNewPassword(password.name);
         } while (!this.checkRegExp(newPassword, password.sites));
+        this.io.print("\n");
 
         // Enqueue updates for each site listed in the password
         this.enqueueUpdates(oldPassword, newPassword, password.sites);
