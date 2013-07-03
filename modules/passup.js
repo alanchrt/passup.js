@@ -77,7 +77,7 @@ Passup.prototype.getOldPassword = function(password) {
             text: ":"
         }
     ]);
-}
+};
 
 Passup.prototype.getNewPassword = function(password) {
     // Ask for the new password by name
@@ -93,7 +93,7 @@ Passup.prototype.getNewPassword = function(password) {
             text: ":"
         }
     ]);
-}
+};
 
 Passup.prototype.checkRegExp = function(password, sites) {
     // Verify that the password matches the regexp for all sites
@@ -123,7 +123,7 @@ Passup.prototype.checkRegExp = function(password, sites) {
     if (!matching)
         io.print("\n");
     return matching;
-}
+};
 
 Passup.prototype.requestUpdates = function() {
     // Retrieve updated passwords
@@ -151,7 +151,7 @@ Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
 
         this.updateQueue.push(update);
     }
-}
+};
 
 Passup.prototype.updateNext = function() {
     // Update the next password in the queue
