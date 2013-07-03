@@ -155,6 +155,33 @@ Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
 
 Passup.prototype.updateNext = function() {
     // Update the next password in the queue
+    if (this.updateQueue.length == 0) this.finish();
+
+    // Get the next one and update it
+    var update = this.updateQueue.shift();
+    io.say([
+        {
+            text: "UPDATING ",
+            style: 'COMMENT',
+        },
+        {
+            text: update.adapter.name,
+            style: 'PARAMETER'
+        }
+    ]);
+    this.hasError = false;
+    update.update();
+
+    // Run the steps set up in the adapter
+    var obj = this;
+    casper.run(function() {
+        if (!obj.hasError)
+            io.say([{
+                text: "\nDone\n",
+                style: 'INFO'
+            }]);
+        obj.updateNext();
+    });
 };
 
 Passup.prototype.finish = function() {
@@ -175,6 +202,9 @@ Passup.prototype.run = function() {
         text: "Passup.js -- version 0.1.0\n",
         style: 'COMMENT'
     }]);
+
+    // Retrieve new passwords
+    this.requestUpdates();
 };
 
 
@@ -189,9 +219,13 @@ function PasswordUpdate() {
     this.newPassword = '';
 }
 
-PasswordUpdate.prototype.update = function(data) {
+PasswordUpdate.prototype.update = function() {
     // Update this adapter with the supplied data
-    this.adapter.update(data);
+    this.adapter.update({
+        site: this.site,
+        oldPassword: this.oldPassword,
+        newPassword: this.newPassword
+    });
 };
 
 
