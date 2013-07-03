@@ -101,9 +101,17 @@ To update only a single password group, call `passup` like this:
 
     $ passup --password=secure
 
+Or, for a list of passwords:
+
+    $ passup --password=secure,social,shopping
+
 To update only a single adapter, use this command:
 
     $ passup --adapter=google
+
+Or a list:
+
+    $ passup --adapter=google,amazon
 
 Creating Adapters
 -----------------
