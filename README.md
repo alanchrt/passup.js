@@ -19,9 +19,9 @@ Passup includes simple adapters for major websites and uses a headless web brows
 Getting Started
 ---------------
 
-**WARNING: Passup.js is in version 0.1.0 and working toward a 1.0 release. The below documentation on the installation and CLI is the envisioned API and not yet functional. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs passup.js`. Passup currently expects a file named `config.js` in the root of the repo that matches the format in `config.example.js`.**
+**WARNING: Passup.js is in version 0.1.0 and working toward a 0.2.0 stable API release. The below documentation on the installation and CLI is the envisioned API and not yet completely implemented. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs init.js`. Passup currently expects a file named `config.js` in the root of the repo that matches the format in `config.example.js`.**
 
-**Make sure your PhantomJS version is 1.9 or greater, since system.stdin and system.stdout support came with version 1.9
+** Make sure your PhantomJS installation is version 1.9 or greater, since system.stdin and system.stdout support arrived in version 1.9.
 
 ### Installation
 
@@ -101,9 +101,17 @@ To update only a single password group, call `passup` like this:
 
     $ passup --password=secure
 
+Or, for a list of passwords:
+
+    $ passup --password=secure,social,shopping
+
 To update only a single adapter, use this command:
 
     $ passup --adapter=google
+
+Or a list:
+
+    $ passup --adapter=google,amazon
 
 Creating Adapters
 -----------------
