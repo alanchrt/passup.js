@@ -6,6 +6,12 @@ casper = require('casper').create();
 require = patchRequire(require, ['./adapters']);
 config = require('./config').config;
 
+// Look for command line arguments
+var passwordGroup = null;
+if (casper.cli.has('password')) {
+    passwordGroup = casper.cli.get('password');
+}
+
 // Require and store adapters
 adapters = {}
 for (i in config.passwords) {
@@ -39,8 +45,14 @@ casper.echo("Passup.js -- version 0.1.0\n", 'COMMENT');
 
 // Request password changes for each password
 for (i in config.passwords) {
-    // Request old password
     var password = config.passwords[i];
+    
+    // check if we want to update this password group
+    if (passwordGroup != null && password.name != passwordGroup) {
+        continue;
+    }
+
+    // Request old password
     casper.echo("Old password " + colorizer.colorize(password.name, 'PARAMETER') + ":");
     var oldPassword = system.stdin.readLine().trim();
     
