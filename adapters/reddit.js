@@ -19,7 +19,5 @@ exports.adapter = {
         casper.then(function() {
             casper.open('http://www.reddit.com/api/update?curpass=' + data.oldPassword + '&newpass=' + data.newPassword + '&verpass=' + data.newPassword + '&verify=false&uh=' + uh, {method: 'post'});
         });
-
-        casper.run();
     }
 };
