@@ -9,7 +9,6 @@ function Passup(config, colorizer) {
     this.updateCount = 0;
     this.siteCount = 0;
     this.hasError = false;
-    this.casper = {};
     this.io = require('./modules/io').create(colorizer);
 
     // Set up imports and bindings
@@ -129,8 +128,11 @@ Passup.prototype.requestUpdates = function() {
         // Ask for new password until it matches site regexps
         var newPassword = '';
         do {
-            newPassword = this.getNewPassowrd(password.name);
+            newPassword = this.getNewPassword(password.name);
         } while (!this.checkRegExp(newPassword, password.sites));
+
+        // Enqueue updates for each site listed in the password
+        this.enqueueUpdates(oldPassword, newPassword, password.sites);
     }
 };
 
@@ -146,12 +148,16 @@ Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
         update.newPassword = newPassword;
 
         this.updateQueue.push(update);
+        this.siteCount ++;
     }
 };
 
 Passup.prototype.updateNext = function() {
     // Update the next password in the queue
-    if (this.updateQueue.length === 0) this.finish();
+    if (this.updateQueue.length === 0) {
+        this.finish();
+        return false;
+    }
 
     // Get the next one and update it
     var update = this.updateQueue.shift();
@@ -171,11 +177,13 @@ Passup.prototype.updateNext = function() {
     // Run the steps set up in the adapter
     var obj = this;
     casper.run(function() {
-        if (!obj.hasError)
-            this.io.say([{
+        if (!obj.hasError) {
+            obj.updateCount ++;
+            obj.io.say([{
                 text: "\nDone\n",
                 style: 'INFO'
             }]);
+        }
         obj.updateNext();
     });
 };
@@ -189,13 +197,10 @@ Passup.prototype.finish = function() {
 
     // End execution
     casper.exit();
-    return;
 };
 
-Passup.prototype.run = function(casper) {
+Passup.prototype.run = function() {
     // Run the application
-    this.casper = casper;
-
     this.io.say([{
         text: "Passup.js -- version 0.1.0\n",
         style: 'COMMENT'
