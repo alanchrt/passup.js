@@ -176,6 +176,9 @@ Passup.prototype.updateNext = function() {
     this.hasError = false;
     update.update();
 
+    // Prevent early termination
+    casper.then(function() {});
+
     // Run the steps set up in the adapter
     var obj = this;
     casper.run(function() {
