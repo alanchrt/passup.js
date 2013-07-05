@@ -96,6 +96,9 @@ Passup.prototype.checkRegExp = function(password, sites) {
     var matching = true;
     for (var i in sites) {
         var site = sites[i];
+
+        if (!this.params.isSpecifiedAdapter(site.adapter)) continue;
+
         var adapter = this.adapters[site.adapter];
         if (!password.match(adapter.passwordRegExp)) {
             // Print warning
