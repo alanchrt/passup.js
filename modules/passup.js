@@ -120,7 +120,7 @@ Passup.prototype.checkRegExp = function(password, sites) {
     return matching;
 };
 
-Passup.prototype.requestUpdates = function(passwords) {
+Passup.prototype.requestUpdates = function(passwords, adapters) {
     // Retrieve updated passwords
     for (var i in this.config.passwords) {
         var password = this.config.passwords[i];
@@ -139,14 +139,16 @@ Passup.prototype.requestUpdates = function(passwords) {
         this.io.print("\n");
 
         // Enqueue updates for each site listed in the password
-        this.enqueueUpdates(oldPassword, newPassword, password.sites);
+        this.enqueueUpdates(oldPassword, newPassword, password.sites, adapters);
     }
 };
 
-Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
+Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites, adapters) {
     // Create a password update for each of the sites and enqueue it
     for (var i in sites) {
         var site = sites[i];
+
+        if (adapters && adapters.indexOf(site.adapter) === -1) continue;
 
         var update = new PasswordUpdate();
         update.site = site;
@@ -217,14 +219,19 @@ Passup.prototype.run = function() {
     }]);
 
     // Retrieve new passwords
+    var passwords = null;
+    var adapters = null;
     if (casper.cli.has('password')) {
-        var passwords = casper.cli.get('password').split(',').map(function(password) {
+        passwords = casper.cli.get('password').split(',').map(function(password) {
             return password.trim();
         });
-        this.requestUpdates(passwords);
     }
-    else
-        this.requestUpdates();
+    if (casper.cli.has('adapter')) {
+        adapters = casper.cli.get('adapter').split(',').map(function(adapter) {
+            return adapter.trim();
+        });
+    }
+    this.requestUpdates(passwords, adapters);
     this.updateNext();
 };
 
