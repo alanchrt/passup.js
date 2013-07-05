@@ -97,6 +97,7 @@ Passup.prototype.checkRegExp = function(password, sites) {
     for (var i in sites) {
         var site = sites[i];
 
+        // Exclude if adapter was not specified
         if (!this.params.isSpecifiedAdapter(site.adapter)) continue;
 
         var adapter = this.adapters[site.adapter];
@@ -129,7 +130,7 @@ Passup.prototype.requestUpdates = function() {
     for (var i in this.config.passwords) {
         var password = this.config.passwords[i];
 
-        // Exclude if password list was specified
+        // Exclude if password was not specified
         if (!this.params.isSpecifiedPassword(password.name)) continue;
 
         // Get the old password
@@ -152,6 +153,7 @@ Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
     for (var i in sites) {
         var site = sites[i];
 
+        // Exclude if adapter was not specified
         if (!this.params.isSpecifiedAdapter(site.adapter)) continue;
 
         var update = new PasswordUpdate();
