@@ -1,16 +1,16 @@
 // Passup
 //-----------------------------------------------
 
-function Passup(config, params) {
+function Passup(config) {
     // Initialize application
     this.config = config;
-    this.params = params;
     this.adapters = {};
     this.updateQueue = [];
     this.updateCount = 0;
     this.siteCount = 0;
     this.hasError = false;
     this.io = require('./modules/io').create();
+    this.params = require('./modules/parameters').create();
 
     // Set up imports and bindings
     this.loadAdapters();
@@ -18,9 +18,9 @@ function Passup(config, params) {
     this.bindSteps();
 }
 
-Passup.create = function(config, params) {
+Passup.create = function(config) {
     // Create a new passup object
-    return new Passup(config, params);
+    return new Passup(config);
 };
 
 Passup.prototype.loadAdapters = function() {

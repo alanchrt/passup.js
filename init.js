@@ -4,8 +4,7 @@ colorizer = require('colorizer').create('Colorizer');
 // Patch require, import config and core
 require = patchRequire(require, ['./modules']);
 config = require('./config').config;
-params = require('./modules/parameters').create();
-passup = require('./modules/passup').create(config, params);
+passup = require('./modules/passup').create(config);
 
 // Supply Google Chrome user agent
 casper.userAgent('Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) ' +
