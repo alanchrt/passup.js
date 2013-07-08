@@ -177,7 +177,7 @@ To-Do
 
 * Settle on test runner and write unit tests (not for update methods in adapters, but for the passup.js core and modules).
 * Create `npm` package with `passup` command and publish to the registry.
-* Create screenshot capture mechanism. Determine best approach. See #2.
+* Create screenshot capture mechanism. Determine best approach. See [#2](https://github.com/alanctkc/passup.js/issues/2).
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/alanctkc/passup.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
