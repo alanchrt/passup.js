@@ -175,12 +175,9 @@ When you're relatively sure your adapter works reliably, send a pull request and
 To-Do
 -----
 
-* Refactor into modular code base.
-* Settle on test runner and write unit tests (not for update methods in adapters, but for the passup.js core).
+* Settle on test runner and write unit tests (not for update methods in adapters, but for the passup.js core and modules).
 * Create `npm` package with `passup` command and publish to the registry.
-* Add CLI arguments.
-* Break adapters into separate repository for updating separate from passup utility.
-* Add error handling for failed attempts, with screenshot capture.
+* Create screenshot capture mechanism. Determine best approach. See #2.
 
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/alanctkc/passup.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
