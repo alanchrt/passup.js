@@ -1,9 +1,9 @@
 // Passup
 //-----------------------------------------------
 
-function Passup(config) {
+function Passup(configData) {
     // Initialize application
-    this.config = config;
+    this.config = configData.cleanData;
     this.adapters = {};
     this.updateQueue = [];
     this.updateCount = 0;
@@ -12,15 +12,17 @@ function Passup(config) {
     this.io = require('./modules/io').create();
     this.params = require('./modules/parameters').create();
 
+    // filter the config
+    configData.filterParams(this.params);
     // Set up imports and bindings
     this.loadAdapters();
     this.bindErrors();
     this.bindSteps();
 }
 
-Passup.create = function(config) {
+Passup.create = function(configData) {
     // Create a new passup object
-    return new Passup(config);
+    return new Passup(configData);
 };
 
 Passup.prototype.loadAdapters = function() {
@@ -97,9 +99,6 @@ Passup.prototype.checkRegExp = function(password, sites) {
     for (var i in sites) {
         var site = sites[i];
 
-        // Exclude if adapter was not specified
-        if (!this.params.isSpecifiedAdapter(site.adapter)) continue;
-
         var adapter = this.adapters[site.adapter];
         if (!password.match(adapter.passwordRegExp)) {
             // Print warning
@@ -130,18 +129,6 @@ Passup.prototype.requestUpdates = function() {
     for (var i in this.config.passwords) {
         var password = this.config.passwords[i];
 
-        // Exclude if password was not specified
-        if (!this.params.isSpecifiedPassword(password.name)) continue;
-        if (this.params.adapters != null) {
-            // check if any adapters in this password have been specified.
-            var shouldUpdate = password.sites.some(function(site, i, sites) {
-                return this.params.isSpecifiedAdapter(site.adapter);
-            }, this);
-            if (!shouldUpdate) {
-                continue;
-            }
-        }
-
         // Get the old password
         var oldPassword = this.getOldPassword(password);
 
@@ -161,9 +148,6 @@ Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
     // Create a password update for each of the sites and enqueue it
     for (var i in sites) {
         var site = sites[i];
-
-        // Exclude if adapter was not specified
-        if (!this.params.isSpecifiedAdapter(site.adapter)) continue;
 
         var update = new PasswordUpdate();
         update.site = site;
