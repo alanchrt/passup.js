@@ -12,8 +12,9 @@ function Passup(configData) {
     this.io = require('./modules/io').create();
     this.params = require('./modules/parameters').create();
 
-    // Set up imports and bindings
+    // filter the config
     configData.filterParams(this.params);
+    // Set up imports and bindings
     this.loadAdapters();
     this.bindErrors();
     this.bindSteps();

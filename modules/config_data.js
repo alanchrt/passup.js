@@ -10,6 +10,7 @@ function ConfigData(rawData, cleanData) {
 
 ConfigData.load = function(filePath) {
 	configJson = fs.read(filePath);
+	// load the json twice to make two deep copies.
 	rawData = JSON.parse(configJson);
 	cleanData = JSON.parse(configJson);
 
@@ -17,12 +18,14 @@ ConfigData.load = function(filePath) {
 };
 
 ConfigData.prototype.filterParams = function(params) {
+	// filter passwords based on command line arguments
 	if (params.passwords) {
 		this.cleanData.passwords = this.cleanData.passwords.filter(
 			function(password, index, passwords) {
 				return params.isSpecifiedPassword(password.name);
 			}, params);
 	}
+	// filter sites based on command line arguments
 	if (params.adapters) {
 		this.cleanData.passwords.forEach(function(password, index, passwords) {
 			password.sites = password.sites.filter(function(site, index, sites) {
@@ -30,6 +33,7 @@ ConfigData.prototype.filterParams = function(params) {
 			});
 		});
 	}
+	// remove passwords that have no sites to update
 	this.cleanData.passwords = this.cleanData.passwords.filter(
 		function(password, index, passwords) {
 			return (password.sites.length > 0);
