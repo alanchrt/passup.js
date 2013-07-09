@@ -3,8 +3,7 @@
 
 function Passup(configData) {
     // Initialize application
-    this.configData = configData;
-    this.config = this.configData.cleanData;
+    this.config = configData.cleanData;
     this.adapters = {};
     this.updateQueue = [];
     this.updateCount = 0;
@@ -14,7 +13,7 @@ function Passup(configData) {
     this.params = require('./modules/parameters').create();
 
     // Set up imports and bindings
-    this.configData.filterParams(this.params);
+    configData.filterParams(this.params);
     this.loadAdapters();
     this.bindErrors();
     this.bindSteps();
