@@ -30,6 +30,10 @@ ConfigData.prototype.filterParams = function(params) {
 			});
 		});
 	}
+	this.cleanData.passwords = this.cleanData.passwords.filter(
+		function(password, index, passwords) {
+			return (password.sites.length > 0);
+		});
 };
 
 module.exports = ConfigData;
