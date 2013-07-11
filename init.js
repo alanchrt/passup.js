@@ -1,9 +1,18 @@
 casper = require('casper').create();
 colorizer = require('colorizer').create('Colorizer');
 
-// Patch require, import config and core
+// Patch require to allow module import
 require = patchRequire(require, ['./modules']);
-configData = require('./modules/configData').load('./config.json');
+
+// Import the user configuration
+try {
+    configData = require('./modules/configData').load('./config.json');
+} catch(e) {
+    casper.echo("Error parsing the configuration file. Check that the file exists and is valid JSON.", 'ERROR');
+    casper.exit();
+}
+
+// Import passup.js core
 passup = require('./modules/passup').create(configData);
 
 // Supply Google Chrome user agent
