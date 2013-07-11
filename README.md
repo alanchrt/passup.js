@@ -19,7 +19,7 @@ Passup includes simple adapters for major websites and uses a headless web brows
 Getting Started
 ---------------
 
-**WARNING: Passup.js is in version 0.1.0 and working toward a 0.2.0 stable API release. The below documentation on the installation and CLI is the envisioned API and not yet completely implemented. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs init.js`. Passup currently expects a file named `config.js` in the root of the repo that matches the format in `config.example.js`.**
+**WARNING: Passup.js is in version 0.1.0 and working toward a 0.2.0 stable API release. The below documentation on the installation and CLI is the envisioned API and not yet completely implemented. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command `casperjs init.js`. Passup currently expects a file named `config.json` in the root of the repo that matches the format in `config.example.json`.**
 
 ** Make sure your PhantomJS installation is version 1.9 or greater, since system.stdin and system.stdout support arrived in version 1.9.
 
@@ -33,13 +33,13 @@ Then create a configuration file for your passwords:
 
     $ passup config
 
-This command will create an example configuration in `~/.passup.js`. Open the file in your text editor of choice and configure to your liking.
+This command will create an example configuration in `~/.passup.json`. Open the file in your text editor of choice and configure to your liking.
 
 ### Configuration
 
-A simple `~/.passup.js` configuration looks something like this:
+A simple `~/.passup.json` configuration looks something like this:
 
-    exports.config = {
+    {
         "passwords": [
             {
                 "name": "amazon-secure",
@@ -82,7 +82,7 @@ A simple `~/.passup.js` configuration looks something like this:
                 ]
             }
         ]
-    };
+    }
 
 In this example, we've specified four passwords -- "amazon-secure," "github-secure," "google-secure," and "mobile-friendly." Password names must include only alphanumeric characters, dashes, and underscores.
 
@@ -151,9 +151,9 @@ Here's an example of a simple `github.js` adapter:
 
 The adapter `name` is a human-readable name for the adapter that will be printed to the terminal when it is updated. `passwordRegExp` is a JavaScript regular expression that specifies the password requirements for the given site.
 
-The update function sets up the CasperJS steps to update the password on that site. View the full CasperJS API documentation [here](http://casperjs.org/api.html). The function should take a parameter called `data`, which provides two special properties, `data.oldPassword` and `data.newPassword`, in addition to a `data.site` object that contains all the site's properties from the user's `~/.passup.js`.
+The update function sets up the CasperJS steps to update the password on that site. View the full CasperJS API documentation [here](http://casperjs.org/api.html). The function should take a parameter called `data`, which provides two special properties, `data.oldPassword` and `data.newPassword`, in addition to a `data.site` object that contains all the site's properties from the user's `~/.passup.json`.
 
-The filename of your adapter, minus the `.js` extension (CommonJS specification), will be the identifier used to include the adapter in a user's `~/.passup.js` configuration. Be sure to use sensible names, usually just the main string of the website's domain. In the `github.js` example above, the adapter identifier used in configuration files is `github`.
+The filename of your adapter, minus the `.js` extension (CommonJS specification), will be the identifier used to include the adapter in a user's `~/.passup.json` configuration. Be sure to use sensible names, usually just the main string of the website's domain. In the `github.js` example above, the adapter identifier used in configuration files is `github`.
 
 After creating your adapter, add an example configuration to a password group in `config.example.js`. For the example above, it looks like this:
 
