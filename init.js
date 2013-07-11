@@ -3,7 +3,7 @@ colorizer = require('colorizer').create('Colorizer');
 
 // Patch require, import config and core
 require = patchRequire(require, ['./modules']);
-configData = require('./modules/config_data').load('./config.json');
+configData = require('./modules/configData').load('./config.json');
 passup = require('./modules/passup').create(configData);
 
 // Supply Google Chrome user agent
