@@ -2,12 +2,9 @@
   "name": "passup",
   "version": "0.1.0",
   "description": "A password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.",
-  "bin" : {
-    "passup": "bin/update"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "author": "Alan C. Thomas <alan@alanct.com> (http://alanct.com/)",
+  "license": "BSD",
+  
   "homepage": "https://github.com/alanctkc/passup.js",
   "repository": {
     "type": "git",
@@ -17,13 +14,18 @@
     "password",
     "updater"
   ],
-  "author": "Alan C. Thomas",
-  "license": "BSD",
   "bugs": {
     "url": "https://github.com/alanctkc/passup.js/issues"
   },
+
   "engines": {
     "node": ">=0.10.0"
+  },
+  "bin" : {
+    "passup": "bin/update"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "preferGlobal": true
 }
