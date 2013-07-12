@@ -1,6 +1,6 @@
 {
   "name": "passup",
-  "version": "0.1.0",
+  "version": "0.9.0",
   "description": "A password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.",
   "author": "Alan C. Thomas <alan@alanct.com> (http://alanct.com/)",
   "license": "BSD",
