@@ -25,7 +25,7 @@ Getting Started
 
 Use `npm` to install:
 
-    $ npm install -g passup.js
+    $ npm install -g
 
 Then create a configuration file for your passwords:
 

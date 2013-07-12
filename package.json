@@ -4,7 +4,6 @@
   "description": "A password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.",
   "author": "Alan C. Thomas <alan@alanct.com> (http://alanct.com/)",
   "license": "BSD",
-  
   "homepage": "https://github.com/alanctkc/passup.js",
   "repository": {
     "type": "git",
@@ -17,7 +16,6 @@
   "bugs": {
     "url": "https://github.com/alanctkc/passup.js/issues"
   },
-
   "engines": {
     "node": ">=0.10.0"
   },
