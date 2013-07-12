@@ -4,44 +4,44 @@ var path = require('path');
 var spawn = require('child_process').spawn;
 
 function getUserHome() {
-	if (process.platform.toLowerCase() == 'win32') {
-		return process.env['USERPROFILE'];
-	} else {
-		return process.env['HOME'];
-	}
+    if (process.platform.toLowerCase() == 'win32') {
+        return process.env.USERPROFILE;
+    } else {
+        return process.env.HOME;
+    }
 }
 
 var passedArgs = process.argv.filter(function(arg, index, array) {
-	return index > 1;
+    return index > 1;
 });
 
 var homePath = getUserHome();
 var targetPath = path.join(homePath, '.passup.json');
 
 if (passedArgs[0] === 'config') {
-	// create example config file in the user's home directory
-	console.log('Creating example config file at ' + targetPath);
+    // create example config file in the user's home directory
+    console.log('Creating example config file at ' + targetPath);
 
     var configExamplePath = path.join(__dirname, '../config.example.json');
-	var sourceStream = fs.createReadStream(configExamplePath);
-	sourceStream.on('error', function(err) {
-		console.log('Error occured on source stream: ' + err);
-	});
+    var sourceStream = fs.createReadStream(configExamplePath);
+    sourceStream.on('error', function(err) {
+        console.log('Error occured on source stream: ' + err);
+    });
 
-	var targetStream = fs.createWriteStream(targetPath);
-	targetStream.on('error', function(err) {
-		console.log('Error occured on target stream: ' + err);
-	});
-	targetStream.on('close', function(ex) {
-		console.log('Created example config file!')
-	});
+    var targetStream = fs.createWriteStream(targetPath);
+    targetStream.on('error', function(err) {
+        console.log('Error occured on target stream: ' + err);
+    });
+    targetStream.on('close', function(ex) {
+        console.log('Created example config file!');
+    });
 
-	sourceStream.pipe(targetStream);
+    sourceStream.pipe(targetStream);
 } else {
-	// start passup
+    // start passup
     var initPath = path.join(__dirname, '../init.js');
-	var args = ['casperjs', initPath, '--manifest=' + targetPath].concat(passedArgs);
-	var update = spawn('/usr/bin/env', args, {
+    var args = ['casperjs', initPath, '--manifest=' + targetPath].concat(passedArgs);
+    var update = spawn('/usr/bin/env', args, {
         stdio: 'inherit',
         cwd: path.join(__dirname, '../')
     });
