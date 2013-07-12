@@ -16,7 +16,7 @@ if (casper.cli.has('manifest')) {
 try {
     configData = require('./modules/configData').load(configPath);
 } catch(e) {
-    casper.echo("Error parsing the configuration file. Check that the file exists and is valid JSON.", 'ERROR');
+    casper.echo("Error parsing the configuration file: " + e, 'ERROR');
     casper.exit();
 }
 
