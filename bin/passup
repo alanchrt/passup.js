@@ -41,5 +41,8 @@ if (passedArgs[0] === 'config') {
 	// start passup
     var initPath = path.join(__dirname, '../init.js');
 	var args = ['casperjs', initPath, '--manifest=' + targetPath].concat(passedArgs);
-	var update = spawn('/usr/bin/env', args, { stdio: 'inherit' });
+	var update = spawn('/usr/bin/env', args, {
+        stdio: 'inherit',
+        cwd: path.join(__dirname, '../')
+    });
 }
