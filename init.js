@@ -4,9 +4,12 @@ colorizer = require('colorizer').create('Colorizer');
 // Patch require to allow module import
 require = patchRequire(require, ['./modules']);
 
+// Resolve the path for the config file to use
 var configPath = './config.json';
 if (casper.cli.has('manifest')) {
 	configPath = casper.cli.get('manifest').trim();
+} else {
+	casper.echo('Using local config.json file.', 'WARNING');
 }
 
 // Import the user configuration
