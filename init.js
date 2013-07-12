@@ -4,9 +4,14 @@ colorizer = require('colorizer').create('Colorizer');
 // Patch require to allow module import
 require = patchRequire(require, ['./modules']);
 
+var configPath = './config.json';
+if (casper.cli.has('manifest')) {
+	configPath = casper.cli.get('manifest').trim();
+}
+
 // Import the user configuration
 try {
-    configData = require('./modules/configData').load('./config.json');
+    configData = require('./modules/configData').load(configPath);
 } catch(e) {
     casper.echo("Error parsing the configuration file. Check that the file exists and is valid JSON.", 'ERROR');
     casper.exit();

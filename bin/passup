@@ -15,14 +15,14 @@ var passedArgs = process.argv.filter(function(arg, index, array) {
 	return index > 1;
 });
 
-if (passedArgs[0] === 'config') {
-	var home = getUserHome();
-	var targetPath = path.join(home, '.passup.json');
+var home = getUserHome();
+var targetPath = path.join(home, '.passup.json');
 
+if (passedArgs[0] === 'config') {
 	var sourceStream = fs.createReadStream('config.example.json');
 	var targetStream = fs.createWriteStream(targetPath);
 	sourceStream.pipe(targetStream);
 } else {
-	var args = ['init.js'].concat(passedArgs);
+	var args = ['init.js', '--manifest=' + targetPath].concat(passedArgs);
 	var update = spawn('casperjs', args, { stdio: 'inherit' });
 }
