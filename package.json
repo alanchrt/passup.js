@@ -22,7 +22,7 @@
     "node": ">=0.10.0"
   },
   "bin" : {
-    "passup": "bin/update"
+    "passup": "bin/passup"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

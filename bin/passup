@@ -1,0 +1,28 @@
+#!/usr/bin/env node
+var fs = require('fs');
+var path = require('path');
+var spawn = require('child_process').spawn;
+
+function getUserHome() {
+	if (process.platform.toLowerCase() == 'win32') {
+		return process.env['USERPROFILE'];
+	} else {
+		return process.env['HOME'];
+	}
+}
+
+var passedArgs = process.argv.filter(function(arg, index, array) {
+	return index > 1;
+});
+
+if (passedArgs[0] === 'config') {
+	var home = getUserHome();
+	var targetPath = path.join(home, '.passup.json');
+
+	var sourceStream = fs.createReadStream('config.example.json');
+	var targetStream = fs.createWriteStream(targetPath);
+	sourceStream.pipe(targetStream);
+} else {
+	var args = ['init.js'].concat(passedArgs);
+	var update = spawn('casperjs', args, { stdio: 'inherit' });
+}

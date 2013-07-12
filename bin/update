@@ -1,8 +1,0 @@
-#!/usr/bin/env node
-var spawn = require('child_process').spawn;
-
-var passedArgs = process.argv.filter(function(arg, index, array) {
-	return index > 1;
-});
-var args = ['init.js'].concat(passedArgs);
-var update = spawn('casperjs', args, { stdio: 'inherit' });
