@@ -15,14 +15,15 @@ var passedArgs = process.argv.filter(function(arg, index, array) {
 	return index > 1;
 });
 
-var home = getUserHome();
-var targetPath = path.join(home, '.passup.json');
+var homePath = getUserHome();
+var targetPath = path.join(homePath, '.passup.json');
 
 if (passedArgs[0] === 'config') {
 	// create example config file in the user's home directory
 	console.log('Creating example config file at ' + targetPath);
 
-	var sourceStream = fs.createReadStream('config.example.json');
+    var configExamplePath = path.join(__dirname, '../config.example.json');
+	var sourceStream = fs.createReadStream(configExamplePath);
 	sourceStream.on('error', function(err) {
 		console.log('Error occured on source stream: ' + err);
 	});
@@ -38,6 +39,7 @@ if (passedArgs[0] === 'config') {
 	sourceStream.pipe(targetStream);
 } else {
 	// start passup
-	var args = ['init.js', '--manifest=' + targetPath].concat(passedArgs);
-	var update = spawn('casperjs', args, { stdio: 'inherit' });
+    var initPath = path.join(__dirname, '../init.js');
+	var args = ['casperjs', initPath, '--manifest=' + targetPath].concat(passedArgs);
+	var update = spawn('/usr/bin/env', args, { stdio: 'inherit' });
 }
