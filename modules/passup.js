@@ -138,18 +138,19 @@ Passup.prototype.requestUpdates = function() {
         this.io.print("\n");
 
         // Enqueue updates for each site listed in the password
-        this.enqueueUpdates(oldPassword, newPassword, password.sites);
+        this.enqueueUpdates(oldPassword, newPassword, password);
     }
 };
 
-Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, sites) {
+Passup.prototype.enqueueUpdates = function(oldPassword, newPassword, password) {
     // Create a password update for each of the sites and enqueue it
-    for (var i in sites) {
-        var site = sites[i];
+    for (var i in password.sites) {
+        var site = password.sites[i];
 
         var update = new PasswordUpdate();
         update.site = site;
         update.adapter = this.adapters[site.adapter];
+        update.password = password;
         update.oldPassword = oldPassword;
         update.newPassword = newPassword;
 
@@ -171,6 +172,16 @@ Passup.prototype.updateNext = function() {
         {
             text: "UPDATING ",
             style: 'COMMENT',
+        },
+        {
+            text: update.password.name + " ",
+            style: 'PARAMETER'
+        },
+        {
+            text: "password ",
+        },
+        {
+            text: "on "
         },
         {
             text: update.adapter.name,
@@ -228,6 +239,7 @@ function PasswordUpdate() {
     // Initialize update object
     this.site = {};
     this.adapter = {};
+    this.password = {};
     this.oldPassword = '';
     this.newPassword = '';
 }
