@@ -1,48 +1,76 @@
 #!/usr/bin/env node
+
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 
-function getUserHome() {
-    if (process.platform.toLowerCase() == 'win32') {
-        return process.env.USERPROFILE;
-    } else {
-        return process.env.HOME;
-    }
-}
+// Determine the home directory, configuration file, adapter, and init paths
+var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
+var configExamplePath = path.join(__dirname, '../config.example.json');
+var configPath = path.join(homePath, '.passup.json');
+var adapterPath = path.join(__dirname, '../adapters');
+var initPath = path.join(__dirname, '../init.js');
 
-var passedArgs = process.argv.filter(function(arg, index, array) {
-    return index > 1;
-});
+switch (process.argv[2]) {
+    // Process command line arguments
+    case 'config':
+        console.log("Creating initial configuration file at " + configPath);
 
-var homePath = getUserHome();
-var targetPath = path.join(homePath, '.passup.json');
+        // Retrieve the example configuration
+        var sourceStream = fs.createReadStream(configExamplePath);
+        sourceStream.on('error', function(err) {
+            console.log("Error occured on reading the example configuration: " + err);
+        });
 
-if (passedArgs[0] === 'config') {
-    // create example config file in the user's home directory
-    console.log('Creating example config file at ' + targetPath);
+        // Output the user configuration file
+        var targetStream = fs.createWriteStream(configPath);
+        targetStream.on('error', function(err) {
+            console.log("Error occured on creating the configuration: " + err);
+        });
+        targetStream.on('close', function(ex) {
+            console.log("Configuration file created successfully.");
+        });
+        sourceStream.pipe(targetStream);
+        var configExamplePath = path.join(__dirname, '../config.example.json');
+        break;
 
-    var configExamplePath = path.join(__dirname, '../config.example.json');
-    var sourceStream = fs.createReadStream(configExamplePath);
-    sourceStream.on('error', function(err) {
-        console.log('Error occured on source stream: ' + err);
-    });
+    case 'update':
+        if (!fs.existsSync(adapterPath)) {
+            // Clone the adapters repository
+            var args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', adapterPath];
+            spawn('/usr/bin/env', args, {
+                stdio: 'inherit'
+            });
+        } else {
+            // Update the adapters repository
+            var args = ['git', 'pull', 'origin', 'master'];
+            spawn('/usr/bin/env', args, {
+                stdio: 'inherit',
+                cwd: adapterPath
+            });
+        }
+        break;
 
-    var targetStream = fs.createWriteStream(targetPath);
-    targetStream.on('error', function(err) {
-        console.log('Error occured on target stream: ' + err);
-    });
-    targetStream.on('close', function(ex) {
-        console.log('Created example config file!');
-    });
+    default:
+        // Check for configuration file
+        if (!fs.existsSync(configPath)) {
+            // Clone the adapters repository
+            console.log("No configuration file found. Use command 'passup config' to generate a default ~/.passup.json.");
+            break;
+        }
 
-    sourceStream.pipe(targetStream);
-} else {
-    // start passup
-    var initPath = path.join(__dirname, '../init.js');
-    var args = ['casperjs', initPath, '--manifest=' + targetPath].concat(passedArgs);
-    var update = spawn('/usr/bin/env', args, {
-        stdio: 'inherit',
-        cwd: path.join(__dirname, '../')
-    });
+        // Check for adapters
+        if (!fs.existsSync(adapterPath)) {
+            // Clone the adapters repository
+            console.log("No adapters found. Use command 'passup update' to update to the latest adapters.");
+            break;
+        }
+
+        // Start passup
+        var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
+        spawn('/usr/bin/env', args, {
+            stdio: 'inherit',
+            cwd: path.join(__dirname, '../')
+        });
+        break;
 }
