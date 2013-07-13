@@ -222,7 +222,7 @@ Passup.prototype.finish = function() {
 Passup.prototype.run = function() {
     // Run the application
     this.io.say([{
-        text: "Passup.js -- version 0.1.0\n",
+        text: "Passup.js -- version 0.9.0\n",
         style: 'COMMENT'
     }]);
 
