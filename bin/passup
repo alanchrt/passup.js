@@ -4,12 +4,13 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 
-// Determine the home directory, configuration file, adapter, and init paths
+// Determine the home directory, configuration file, adapter, init, and binary paths
 var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
 var configExamplePath = path.join(__dirname, '../config.example.json');
 var configPath = path.join(homePath, '.passup.json');
 var adapterPath = path.join(__dirname, '../adapters');
 var initPath = path.join(__dirname, '../init.js');
+var binPath = path.join(__dirname, '../node_modules/.bin');
 
 switch (process.argv[2]) {
     // Process command line arguments
@@ -72,11 +73,15 @@ switch (process.argv[2]) {
             break;
         }
 
+        // Add dependency binaries to environment
+        process.env.PATH = binPath + ':' + process.env.PATH;
+
         // Start passup
         var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
         spawn('/usr/bin/env', args, {
             stdio: 'inherit',
-            cwd: path.join(__dirname, '../')
+            cwd: path.join(__dirname, '../'),
+            env: process.env
         });
         break;
 }

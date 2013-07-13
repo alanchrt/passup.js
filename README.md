@@ -18,8 +18,6 @@ Passup includes simple adapters for major websites and uses a headless web brows
 Getting Started
 ---------------
 
-** Make sure your PhantomJS installation is version 1.9 or greater, since system.stdin and system.stdout are unsupported in prior versions.
-
 ### Installation
 
 Use `npm` to install:
