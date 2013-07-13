@@ -1,8 +1,7 @@
 Passup.js
 =========
 
-A hacker's tool for keeping web passwords up-to-date
-----------------------------------------------------
+###A hacker's tool for keeping web passwords up-to-date
 
 Security experts recommend updating account passwords frequently to mitigate the damage inflicted by a compromised password. However, most of us maintain multiple web accounts and have hardly updated a handful of passwords before it's time to rotate again.
 
