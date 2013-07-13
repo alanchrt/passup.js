@@ -28,10 +28,16 @@ switch (process.argv[2]) {
             console.log("Error occured on creating the configuration: " + err);
         });
         targetStream.on('close', function(ex) {
-            console.log("Configuration file created successfully.");
+            console.log("Changes saved.");
         });
         sourceStream.pipe(targetStream);
-        var configExamplePath = path.join(__dirname, '../config.example.json');
+
+        // Open the file for editing
+        var textEditor = process.env.VISUAL || process.env.EDITOR || 'nano';
+        var args = [textEditor, configPath];
+        spawn('/usr/bin/env', args, {
+            stdio: 'inherit'
+        });
         break;
 
     case 'update':
