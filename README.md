@@ -14,7 +14,7 @@ Passup includes simple adapters for major websites and uses a headless web brows
 
 ### Contributors Needed
 
-**Don't be shy!** The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.
+**Don't be shy!** The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests to the [passup-adapters repository](https://github.com/alanctkc/passup-adapters) for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.
 
 Getting Started
 ---------------
@@ -116,59 +116,7 @@ Creating Adapters
 
 Adapaters are written in CasperJS and run on the headless PhantomJS browser.
 
-The easiest way to contribute an adapter is simply to copy an existing adapter and make modifications as necessary.
-
-Here's an example of a simple `github.js` adapter:
-
-    exports.adapter = {
-        "name": "GitHub",
-        "passwordRegExp": /\w/,
-        "update": function(data) {
-            casper.start('https://github.com/login');
-
-            casper.then(function() {
-                this.fill('form[action="/session"]', {
-                    'login': data.site.login,
-                    'password': data.oldPassword
-                }, true);
-            });
-
-            casper.then(function() {
-                this.open('https://github.com/settings/admin');
-            });
-
-            casper.then(function() {
-                this.fill('form#change_password', {
-                    'user[old_password]': data.oldPassword,
-                    'user[password]': data.newPassword,
-                    'user[password_confirmation]': data.newPassword
-                }, true);
-            });
-        }
-    };
-
-The adapter `name` is a human-readable name for the adapter that will be printed to the terminal when it is updated. `passwordRegExp` is a JavaScript regular expression that specifies the password requirements for the given site.
-
-The update function sets up the CasperJS steps to update the password on that site. View the full CasperJS API documentation [here](http://casperjs.org/api.html). The function should take a parameter called `data`, which provides two special properties, `data.oldPassword` and `data.newPassword`, in addition to a `data.site` object that contains all the site's properties from the user's `~/.passup.json`.
-
-The filename of your adapter, minus the `.js` extension (CommonJS specification), will be the identifier used to include the adapter in a user's `~/.passup.json` configuration. Be sure to use sensible names, usually just the main string of the website's domain. In the `github.js` example above, the adapter identifier used in configuration files is `github`.
-
-After creating your adapter, add an example configuration to a password group in `config.example.js`. For the example above, it looks like this:
-
-    {
-        "adapter": "github",
-        "login": "username"
-    }
-
-If you need additional data in your update function, be sure to include it in the example configuration. It might look something like this:
-
-    {
-        "adapter": "bankOfAmerica",
-        "login": "username",
-        "state": "MO"
-    }
-
-When you're relatively sure your adapter works reliably, send a pull request and it will be added to the repository to be shared with other users.
+For further information on creating, modifying, and sharing adapters with Passup users, check out the [passup-adapters](https://github.com/alanctkc/passup-adapters) repository.
 
 To-Do
 -----
