@@ -15,6 +15,10 @@ var binPath = path.join(__dirname, '../node_modules/.bin');
 switch (process.argv[2]) {
     // Process command line arguments
     case 'config':
+        if (fs.existsSync(configPath) && process.argv[3] !== "--f") {
+            console.log("Configuration file already exists. Use 'passup config --f to overwrite it.");
+            break;
+        }
         console.log("Creating initial configuration file at " + configPath);
 
         // Retrieve the example configuration
