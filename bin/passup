@@ -7,6 +7,7 @@ var spawn = require('child_process').spawn;
 // Determine the home directory, configuration file, adapter, init, and binary paths
 var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
 var configExamplePath = path.join(__dirname, '../config.example.json');
+var configInitialPath = path.join(__dirname, '../config.initial.json');
 var configPath = path.join(homePath, '.passup.json');
 var adapterPath = path.join(__dirname, '../adapters');
 var initPath = path.join(__dirname, '../init.js');
@@ -22,7 +23,7 @@ switch (process.argv[2]) {
         console.log("Creating initial configuration file at " + configPath);
 
         // Retrieve the example configuration
-        var sourceStream = fs.createReadStream(configExamplePath);
+        var sourceStream = fs.createReadStream(configInitialPath);
         sourceStream.on('error', function(err) {
             console.log("Error occured on reading the example configuration: " + err);
         });
