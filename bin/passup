@@ -3,6 +3,7 @@
 var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
+var program = require('commander');
 
 // Determine the home directory, configuration file, adapter, init, and binary paths
 var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
@@ -13,12 +14,23 @@ var adapterPath = path.join(__dirname, '../adapters');
 var initPath = path.join(__dirname, '../init.js');
 var binPath = path.join(__dirname, '../node_modules/.bin');
 
-switch (process.argv[2]) {
-    // Process command line arguments
-    case 'config':
-        if (fs.existsSync(configPath) && process.argv[3] !== "-f") {
+var shouldRunPassup = true;
+function onCommand() {
+    shouldRunPassup = false;
+}
+
+program.version('0.9.0');
+
+program.on('config', onCommand);
+program.on('update', onCommand);
+
+program.command('config')
+    .description("creates a default config in the user's home dir")
+    .option('-f, --force', 'overwrites the old configuration file')
+    .action(function configCommand(args) {
+        if (fs.existsSync(configPath) && !args.force) {
             console.log("Configuration file already exists. Use 'passup config -f to overwrite it.");
-            break;
+            return;
         }
         console.log("Creating initial configuration file at " + configPath);
 
@@ -44,9 +56,11 @@ switch (process.argv[2]) {
         spawn('/usr/bin/env', args, {
             stdio: 'inherit'
         });
-        break;
+    });
 
-    case 'update':
+program.command('update')
+    .description("clones the adapters git repository")
+    .action(function updateCommand() {
         if (!fs.existsSync(adapterPath)) {
             // Clone the adapters repository
             var args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', adapterPath];
@@ -61,32 +75,33 @@ switch (process.argv[2]) {
                 cwd: adapterPath
             });
         }
-        break;
+    });
 
-    default:
-        // Check for configuration file
-        if (!fs.existsSync(configPath)) {
-            // Clone the adapters repository
-            console.log("No configuration file found. Use command 'passup config' to generate a default ~/.passup.json.");
-            break;
-        }
+program.parse(process.argv);
 
-        // Check for adapters
-        if (!fs.existsSync(adapterPath)) {
-            // Clone the adapters repository
-            console.log("No adapters found. Use command 'passup update' to update to the latest adapters.");
-            break;
-        }
+if (shouldRunPassup) {
+    // Check for configuration file
+    if (!fs.existsSync(configPath)) {
+        // Clone the adapters repository
+        console.log("No configuration file found. Use command 'passup config' to generate a default ~/.passup.json.");
+        process.exit();
+    }
 
-        // Add dependency binaries to environment
-        process.env.PATH = binPath + ':' + process.env.PATH;
+    // Check for adapters
+    if (!fs.existsSync(adapterPath)) {
+        // Clone the adapters repository
+        console.log("No adapters found. Use command 'passup update' to update to the latest adapters.");
+        process.exit();
+    }
 
-        // Start passup
-        var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
-        spawn('/usr/bin/env', args, {
-            stdio: 'inherit',
-            cwd: path.join(__dirname, '../'),
-            env: process.env
-        });
-        break;
+    // Add dependency binaries to environment
+    process.env.PATH = binPath + ':' + process.env.PATH;
+
+    // Start passup
+    var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
+    spawn('/usr/bin/env', args, {
+        stdio: 'inherit',
+        cwd: path.join(__dirname, '../'),
+        env: process.env
+    });
 }
