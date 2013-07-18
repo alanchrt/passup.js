@@ -15,7 +15,9 @@ var initPath = path.join(__dirname, '../init.js');
 var binPath = path.join(__dirname, '../node_modules/.bin');
 
 
-program.version('0.9.0');
+program.version('0.9.0')
+    .option('--adapter', 'specifies what adapters to update')
+    .option('--password', 'specifies what password groups to update');
 
 var shouldRunPassup = true;
 function onCommand() {
