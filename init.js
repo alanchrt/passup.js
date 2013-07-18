@@ -9,7 +9,7 @@ if (casper.cli.has('manifest')) {
 	var configPath = casper.cli.get('manifest').trim();
 } else {
 	casper.echo('No ~/.passup.json configuration found. Use "passup config" to create one.', 'ERROR');
-    casper.exit();
+  casper.exit();
 }
 
 // Import the user configuration
