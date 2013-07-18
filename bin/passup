@@ -14,13 +14,13 @@ var adapterPath = path.join(__dirname, '../adapters');
 var initPath = path.join(__dirname, '../init.js');
 var binPath = path.join(__dirname, '../node_modules/.bin');
 
+
+program.version('0.9.0');
+
 var shouldRunPassup = true;
 function onCommand() {
     shouldRunPassup = false;
 }
-
-program.version('0.9.0');
-
 program.on('config', onCommand);
 program.on('update', onCommand);
 
