@@ -16,8 +16,8 @@ var initPath = path.join(__dirname, '../init.js');
 
 
 program.version('0.9.0')
-    .option('--adapter', 'specifies what adapters to update')
-    .option('--password', 'specifies what password groups to update');
+    .option('--adapter', "update only the specified adapter(s)")
+    .option('--password', "update only the specified password(s)");
 
 var shouldRunPassup = true;
 function onCommand() {
@@ -27,8 +27,8 @@ program.on('config', onCommand);
 program.on('update', onCommand);
 
 program.command('config')
-    .description("creates a default config in the user's home dir")
-    .option('-f, --force', 'overwrites the old configuration file')
+    .description("create initial configuration file in the user home directory")
+    .option('-f, --force', "force overwrite of existing user configuration")
     .action(function configCommand(args) {
         if (fs.existsSync(configPath) && !args.force) {
             console.log("Configuration file already exists. Use 'passup config -f' to overwrite it.");

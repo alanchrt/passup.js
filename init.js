@@ -6,10 +6,10 @@ require = patchRequire(require, ['./modules']);
 
 // Resolve the path for the config file to use
 if (casper.cli.has('manifest')) {
-	var configPath = casper.cli.get('manifest').trim();
+    var configPath = casper.cli.get('manifest').trim();
 } else {
-	casper.echo('No ~/.passup.json configuration found. Use "passup config" to create one.', 'ERROR');
-  casper.exit();
+    casper.echo('No ~/.passup.json configuration found. Use "passup config" to create one.', 'ERROR');
+    casper.exit();
 }
 
 // Import the user configuration
