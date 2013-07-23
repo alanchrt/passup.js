@@ -1,0 +1,109 @@
+#!/usr/bin/env node
+
+var fs = require('fs');
+var path = require('path');
+var spawn = require('child_process').spawn;
+var program = require('commander');
+var phantomjs = require('phantomjs');
+
+// Determine the home directory, configuration file, adapter, init, and binary paths
+var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
+var configExamplePath = path.join(__dirname, '../config.example.json');
+var configInitialPath = path.join(__dirname, '../config.initial.json');
+var configPath = path.join(homePath, '.passup.json');
+var adapterPath = path.join(__dirname, '../adapters');
+var initPath = path.join(__dirname, '../init.js');
+
+
+program.version('0.9.0')
+    .option('--adapter', 'specifies what adapters to update')
+    .option('--password', 'specifies what password groups to update');
+
+var shouldRunPassup = true;
+function onCommand() {
+    shouldRunPassup = false;
+}
+program.on('config', onCommand);
+program.on('update', onCommand);
+
+program.command('config')
+    .description("creates a default config in the user's home dir")
+    .option('-f, --force', 'overwrites the old configuration file')
+    .action(function configCommand(args) {
+        if (fs.existsSync(configPath) && !args.force) {
+            console.log("Configuration file already exists. Use 'passup config -f to overwrite it.");
+            return;
+        }
+        console.log("Creating initial configuration file at " + configPath);
+
+        // Retrieve the example configuration
+        var sourceStream = fs.createReadStream(configInitialPath);
+        sourceStream.on('error', function(err) {
+            console.log("Error occured on reading the example configuration: " + err);
+        });
+
+        // Output the user configuration file
+        var targetStream = fs.createWriteStream(configPath);
+        targetStream.on('error', function(err) {
+            console.log("Error occured on creating the configuration: " + err);
+        });
+        targetStream.on('close', function(ex) {
+            console.log("Changes saved.");
+        });
+        sourceStream.pipe(targetStream);
+
+        // Open the file for editing
+        var textEditor = process.env.VISUAL || process.env.EDITOR || 'nano';
+        var args = [textEditor, configPath];
+        spawn('/usr/bin/env', args, {
+            stdio: 'inherit'
+        });
+    });
+
+program.command('update')
+    .description("clones the adapters git repository")
+    .action(function updateCommand() {
+        if (!fs.existsSync(adapterPath)) {
+            // Clone the adapters repository
+            var args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', adapterPath];
+            spawn('/usr/bin/env', args, {
+                stdio: 'inherit'
+            });
+        } else {
+            // Update the adapters repository
+            var args = ['git', 'pull', 'origin', 'master'];
+            spawn('/usr/bin/env', args, {
+                stdio: 'inherit',
+                cwd: adapterPath
+            });
+        }
+    });
+
+program.parse(process.argv);
+
+if (shouldRunPassup) {
+    // Check for configuration file
+    if (!fs.existsSync(configPath)) {
+        // Clone the adapters repository
+        console.log("No configuration file found. Use command 'passup config' to generate a default ~/.passup.json.");
+        process.exit();
+    }
+
+    // Check for adapters
+    if (!fs.existsSync(adapterPath)) {
+        // Clone the adapters repository
+        console.log("No adapters found. Use command 'passup update' to update to the latest adapters.");
+        process.exit();
+    }
+
+    // Add dependency binaries to environment
+    process.env.PATH = phantomjs.path + ':' + process.env.PATH;
+
+    // Start passup
+    var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
+    spawn('/usr/bin/env', args, {
+        stdio: 'inherit',
+        cwd: path.join(__dirname, '../'),
+        env: process.env
+    });
+}

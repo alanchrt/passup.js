@@ -1,4 +1,4 @@
-exports.config = {
+{
     "passwords": [
         {
             "name": "development",
@@ -93,4 +93,4 @@ exports.config = {
             ]
         }
     ]
-};
+}
