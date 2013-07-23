@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var spawn = require('child_process').spawn;
 var program = require('commander');
+var phantomjs = require('phantomjs');
 
 // Determine the home directory, configuration file, adapter, init, and binary paths
 var homePath = (process.platform.toLowerCase() == 'win32') ? process.env.USERPROFILE : process.env.HOME;
@@ -12,15 +13,16 @@ var configInitialPath = path.join(__dirname, '../config.initial.json');
 var configPath = path.join(homePath, '.passup.json');
 var adapterPath = path.join(__dirname, '../adapters');
 var initPath = path.join(__dirname, '../init.js');
-var binPath = path.join(__dirname, '../node_modules/.bin');
+
+
+program.version('0.9.0')
+    .option('--adapter', 'specifies what adapters to update')
+    .option('--password', 'specifies what password groups to update');
 
 var shouldRunPassup = true;
 function onCommand() {
     shouldRunPassup = false;
 }
-
-program.version('0.9.0');
-
 program.on('config', onCommand);
 program.on('update', onCommand);
 
@@ -95,7 +97,7 @@ if (shouldRunPassup) {
     }
 
     // Add dependency binaries to environment
-    process.env.PATH = binPath + ':' + process.env.PATH;
+    process.env.PATH = phantomjs.path + ':' + process.env.PATH;
 
     // Start passup
     var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
