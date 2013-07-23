@@ -29,7 +29,7 @@ program.command('config')
     .option('-f, --force', 'overwrites the old configuration file')
     .action(function configCommand(args) {
         if (fs.existsSync(configPath) && !args.force) {
-            console.log("Configuration file already exists. Use 'passup config -f to overwrite it.");
+            console.log("Configuration file already exists. Use 'passup config -f' to overwrite it.");
             return;
         }
         console.log("Creating initial configuration file at " + configPath);
