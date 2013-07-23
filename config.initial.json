@@ -1,13 +1,9 @@
 {
-    "passwords": [
-    {
+    "passwords": [{
         "name": "development",
-            "sites": [
-            {
-                "adapter": "github",
-                "login": "your username"
-            }
-        ]
-    }
-    ]
+        "sites": [{
+            "adapter": "github",
+            "login": "username"
+        }]
+    }]
 }
