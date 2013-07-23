@@ -19,13 +19,6 @@ program.version('0.9.0')
     .option('--adapter', "update only the specified adapter(s)")
     .option('--password', "update only the specified password(s)");
 
-var shouldRunPassup = true;
-function onCommand() {
-    shouldRunPassup = false;
-}
-program.on('config', onCommand);
-program.on('update', onCommand);
-
 program.command('config')
     .description("create initial configuration file in the user home directory")
     .option('-f, --force', "force overwrite of existing user configuration")
@@ -54,7 +47,7 @@ program.command('config')
 
         // Open the file for editing
         var textEditor = process.env.VISUAL || process.env.EDITOR || 'nano';
-        var args = [textEditor, configPath];
+        args = [textEditor, configPath];
         spawn('/usr/bin/env', args, {
             stdio: 'inherit'
         });
@@ -63,15 +56,16 @@ program.command('config')
 program.command('update')
     .description("clones the adapters git repository")
     .action(function updateCommand() {
+        var args = [];
         if (!fs.existsSync(adapterPath)) {
             // Clone the adapters repository
-            var args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', adapterPath];
+            args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', adapterPath];
             spawn('/usr/bin/env', args, {
                 stdio: 'inherit'
             });
         } else {
             // Update the adapters repository
-            var args = ['git', 'pull', 'origin', 'master'];
+            args = ['git', 'pull', 'origin', 'master'];
             spawn('/usr/bin/env', args, {
                 stdio: 'inherit',
                 cwd: adapterPath
@@ -79,9 +73,7 @@ program.command('update')
         }
     });
 
-program.parse(process.argv);
-
-if (shouldRunPassup) {
+function runPassup() {
     // Check for configuration file
     if (!fs.existsSync(configPath)) {
         // Clone the adapters repository
@@ -107,3 +99,17 @@ if (shouldRunPassup) {
         env: process.env
     });
 }
+
+// Determine whether or not to run passup
+var shouldRunPassup = true;
+function onCommand() {
+    shouldRunPassup = false;
+}
+program.on('config', onCommand);
+program.on('update', onCommand);
+
+// Parse the command line arguments
+program.parse(process.argv);
+
+// Run passup
+if (shouldRunPassup) runPassup();
