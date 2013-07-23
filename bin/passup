@@ -97,7 +97,7 @@ if (shouldRunPassup) {
     }
 
     // Add dependency binaries to environment
-    process.env.PATH = phantomjs.path + ':' + process.env.PATH;
+    process.env.PATH = path.dirname(phantomjs.path) + ':' + process.env.PATH;
 
     // Start passup
     var args = ['casperjs', initPath, '--manifest=' + configPath].concat(process.argv.slice(2));
