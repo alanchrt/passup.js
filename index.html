@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <link href='https://fonts.googleapis.com/css?family=Chivo:900' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/pygment_trac.css" media="screen" />
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print" />
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <title>Passup.js by alanctkc</title>
+  </head>
+
+  <body>
+    <div id="container">
+      <div class="inner">
+
+        <header>
+          <h1>Passup.js</h1>
+          <h2>A hacker's tool for keeping web passwords up-to-date.</h2>
+        </header>
+
+        <section id="downloads" class="clearfix">
+          <a href="https://github.com/alanctkc/passup.js/zipball/master" id="download-zip" class="button"><span>Download .zip</span></a>
+          <a href="https://github.com/alanctkc/passup.js/tarball/master" id="download-tar-gz" class="button"><span>Download .tar.gz</span></a>
+          <a href="https://github.com/alanctkc/passup.js" id="view-on-github" class="button"><span>View on GitHub</span></a>
+        </section>
+
+        <hr>
+
+        <section id="main_content">
+          <h1>
+<a name="passupjs" class="anchor" href="#passupjs"><span class="octicon octicon-link"></span></a>Passup.js</h1>
+
+<h2>
+<a name="update-all-of-your-passwords-at-once" class="anchor" href="#update-all-of-your-passwords-at-once"><span class="octicon octicon-link"></span></a>Update all of your passwords at once</h2>
+
+<p>Security experts recommend updating account passwords frequently to mitigate the damage inflicted by a compromised password. However, most of us maintain multiple web accounts and have hardly updated a handful of passwords before it's time to rotate again.</p>
+
+<p><strong>Passup.js</strong> is a password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.</p>
+
+<p><img src="https://raw.github.com/alanctkc/passup.js/master/screenshot.png" alt="passup.js"></p>
+
+<p>Passup includes simple adapters for major websites and uses a headless web browser to automate the process of changing your passwords. Passup allows you to configure a list of sites you use for each password and update each group of sites by typing the password only once. So, for example, if you use the same password for all your social media sites and throwaway accounts, you can bulk update them with a single command.</p>
+
+<h3>
+<a name="contributors-needed" class="anchor" href="#contributors-needed"><span class="octicon octicon-link"></span></a>Contributors Needed</h3>
+
+<p><strong>Don't be shy!</strong> The more developers that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone. Please send pull requests for any adapters you create for the sites you use, regardless of their size or popularity. Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.</p>
+
+<h2>
+<a name="getting-started" class="anchor" href="#getting-started"><span class="octicon octicon-link"></span></a>Getting Started</h2>
+
+<p><strong>WARNING: Passup.js is in version 0.1.0 and working toward a 0.2.0 stable API release. The below documentation on the installation and CLI is the envisioned API and not yet completely implemented. To use Passup.js now and contribute adapters, install PhantomJS and CasperJS, clone this repo, and use the command <code>casperjs init.js</code>. Passup currently expects a file named <code>config.json</code> in the root of the repo that matches the format in <code>config.example.json</code>.</strong></p>
+
+<p>** Make sure your PhantomJS installation is version 1.9 or greater, since system.stdin and system.stdout support arrived in version 1.9.</p>
+
+<h3>
+<a name="installation" class="anchor" href="#installation"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<p>Use <code>npm</code> to install:</p>
+
+<pre><code>$ npm install -g passup.js
+</code></pre>
+
+<p>Then create a configuration file for your passwords:</p>
+
+<pre><code>$ passup config
+</code></pre>
+
+<p>This command will create an example configuration in <code>~/.passup.json</code>. Open the file in your text editor of choice and configure to your liking.</p>
+
+<h3>
+<a name="configuration" class="anchor" href="#configuration"><span class="octicon octicon-link"></span></a>Configuration</h3>
+
+<p>A simple <code>~/.passup.json</code> configuration looks something like this:</p>
+
+<pre><code>{
+    "passwords": [
+        {
+            "name": "amazon-secure",
+            "sites": [
+                {
+                    "adapter": "amazon",
+                    "login": "user@email.com"
+                }
+            ]
+        },
+        {
+            "name": "github-secure",
+            "sites": [
+                {
+                    "adapter": "github",
+                    "login": "username"
+                }
+            ]
+        },
+        {
+            "name": "google-secure",
+            "sites": [
+                {
+                    "adapter": "google",
+                    "login": "user@email.com"
+                }
+            ]
+        },
+        {
+            "name": "mobile-friendly",
+            "sites": [
+                {
+                    "adapter": "facebook",
+                    "login": "user@email.com"
+                },
+                {
+                    "adapter": "hackerNews",
+                    "login": "username"
+                }
+            ]
+        }
+    ]
+}
+</code></pre>
+
+<p>In this example, we've specified four passwords -- "amazon-secure," "github-secure," "google-secure," and "mobile-friendly." Password names must include only alphanumeric characters, dashes, and underscores.</p>
+
+<p>Each password contains a list of the sites that use that password. To get started, you'll want to group your sites together with passwords as you already use them, or you'll want to update your web account passwords to match your configuration. Basically, just make sure that when you start, your password groups specified here match how you actually have the passwords set so things don't get out of sync. It's recommended to include only a single site for each password you truly want to be secure, so you aren't using the same password on two sensitive sites -- in the event that one gets compromised.</p>
+
+<p>Each site specifies an adapter, which is simply the adapter filename without the <code>.js</code> extension (CommonJS specification). Additionally, sites contain extra data, usually a <code>login</code> attribute and zero or more additional parameters needed for login.</p>
+
+<h3>
+<a name="updating-passwords" class="anchor" href="#updating-passwords"><span class="octicon octicon-link"></span></a>Updating Passwords</h3>
+
+<p>Make sure you have the latest adapters, then issue the <code>passup</code> command to update all of your passwords:</p>
+
+<pre><code>$ passup update
+$ passup
+</code></pre>
+
+<p>To update only a single password group, call <code>passup</code> like this:</p>
+
+<pre><code>$ passup --password=secure
+</code></pre>
+
+<p>Or, for a list of passwords:</p>
+
+<pre><code>$ passup --password=secure,social,shopping
+</code></pre>
+
+<p>To update only a single adapter, use this command:</p>
+
+<pre><code>$ passup --adapter=google
+</code></pre>
+
+<p>Or a list:</p>
+
+<pre><code>$ passup --adapter=google,amazon
+</code></pre>
+
+<h2>
+<a name="creating-adapters" class="anchor" href="#creating-adapters"><span class="octicon octicon-link"></span></a>Creating Adapters</h2>
+
+<p>Adapaters are written in CasperJS and run on the headless PhantomJS browser.</p>
+
+<p>The easiest way to contribute an adapter is simply to copy an existing adapter and make modifications as necessary.</p>
+
+<p>Here's an example of a simple <code>github.js</code> adapter:</p>
+
+<pre><code>exports.adapter = {
+    "name": "GitHub",
+    "passwordRegExp": /\w/,
+    "update": function(data) {
+        casper.start('https://github.com/login');
+
+        casper.then(function() {
+            this.fill('form[action="/session"]', {
+                'login': data.site.login,
+                'password': data.oldPassword
+            }, true);
+        });
+
+        casper.then(function() {
+            this.open('https://github.com/settings/admin');
+        });
+
+        casper.then(function() {
+            this.fill('form#change_password', {
+                'user[old_password]': data.oldPassword,
+                'user[password]': data.newPassword,
+                'user[password_confirmation]': data.newPassword
+            }, true);
+        });
+    }
+};
+</code></pre>
+
+<p>The adapter <code>name</code> is a human-readable name for the adapter that will be printed to the terminal when it is updated. <code>passwordRegExp</code> is a JavaScript regular expression that specifies the password requirements for the given site.</p>
+
+<p>The update function sets up the CasperJS steps to update the password on that site. View the full CasperJS API documentation <a href="http://casperjs.org/api.html">here</a>. The function should take a parameter called <code>data</code>, which provides two special properties, <code>data.oldPassword</code> and <code>data.newPassword</code>, in addition to a <code>data.site</code> object that contains all the site's properties from the user's <code>~/.passup.json</code>.</p>
+
+<p>The filename of your adapter, minus the <code>.js</code> extension (CommonJS specification), will be the identifier used to include the adapter in a user's <code>~/.passup.json</code> configuration. Be sure to use sensible names, usually just the main string of the website's domain. In the <code>github.js</code> example above, the adapter identifier used in configuration files is <code>github</code>.</p>
+
+<p>After creating your adapter, add an example configuration to a password group in <code>config.example.js</code>. For the example above, it looks like this:</p>
+
+<pre><code>{
+    "adapter": "github",
+    "login": "username"
+}
+</code></pre>
+
+<p>If you need additional data in your update function, be sure to include it in the example configuration. It might look something like this:</p>
+
+<pre><code>{
+    "adapter": "bankOfAmerica",
+    "login": "username",
+    "state": "MO"
+}
+</code></pre>
+
+<p>When you're relatively sure your adapter works reliably, send a pull request and it will be added to the repository to be shared with other users.</p>
+
+<h2>
+<a name="to-do" class="anchor" href="#to-do"><span class="octicon octicon-link"></span></a>To-Do</h2>
+
+<ul>
+<li>Settle on test runner and write unit tests (not for update methods in adapters, but for the passup.js core and modules).</li>
+<li>Create <code>npm</code> package with <code>passup</code> command and publish to the registry.</li>
+<li>Create screenshot capture mechanism. Determine best approach. See <a href="https://github.com/alanctkc/passup.js/issues/2">#2</a>.</li>
+</ul><p><a href="https://bitdeli.com/free" title="Bitdeli Badge"><img src="https://d2weczhvl823v0.cloudfront.net/alanctkc/passup.js/trend.png" alt="Bitdeli Badge"></a></p>
+        </section>
+
+        <footer>
+          Passup.js is maintained by <a href="https://github.com/alanctkc">alanctkc</a><br>
+          This page was generated by <a href="http://pages.github.com">GitHub Pages</a>. Tactile theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.
+        </footer>
+
+        
+      </div>
+    </div>
+  </body>
+</html>
