@@ -33,6 +33,7 @@
     },
     "dependencies": {
         "phantomjs": "~1.9.0",
+        "casperjs": "git://github.com/n1k0/casperjs",
         "commander": "~1.3.0"
     },
     "bin" : {
