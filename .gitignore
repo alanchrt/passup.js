@@ -1,3 +1,4 @@
 adapters
 npm-debug.log
 node_modules
+.vagrant
