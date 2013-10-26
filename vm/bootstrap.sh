@@ -7,5 +7,6 @@ apt-get update
 apt-get install -y git
 apt-get install -y nodejs
 apt-get install -y npm
+apt-get install -y libfontconfig1-dev
 sudo -u vagrant ln -s /vagrant /home/vagrant/passup.js
 cd passup.js && npm install -g && passup update
