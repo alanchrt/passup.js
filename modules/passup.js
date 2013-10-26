@@ -3,14 +3,14 @@
 
 function Passup(configData) {
     // Initialize application
-    this.params = require('./modules/parameters').create();
+    this.params = require('./parameters').create();
     this.config = configData.filterParams(this.params).cleanData;
     this.adapters = {};
     this.updateQueue = [];
     this.updateCount = 0;
     this.siteCount = 0;
     this.hasError = false;
-    this.io = require('./modules/io').create();
+    this.io = require('./io').create();
 
     // Set up imports and bindings
     this.loadAdapters();
@@ -30,7 +30,7 @@ Passup.prototype.loadAdapters = function() {
         for (var j in password.sites) {
             var site = password.sites[j];
             if (!(site.adapter in this.adapters))
-                this.adapters[site.adapter] = require('./adapters/' + site.adapter).adapter;
+                this.adapters[site.adapter] = require('../adapters/' + site.adapter).adapter;
         }
     }
 };
