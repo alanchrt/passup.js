@@ -128,7 +128,7 @@
     ]
 }
                         </code></pre>
-                        <p><strong class="really-strong">Passup.js will never store your passwords anywhere.</strong></p>
+                        <p><strong class="really-strong">NOTE: Passup.js will never store your passwords anywhere.</strong></p>
                         <p>Your configuration contains groups of passwords and the sites that use that password. Most adapters only need a login, but it's possible to include more parameters needed for authentication. Check <a href="https://github.com/alanctkc/passup.js/blob/master/config.example.json">the example configuration</a> to see how each adapter is configured.</p>
                         <p>You can name your password groups whatever you want, provided they only contain alphanumeric characters, dashes, and underscores.</p>
                         <p>Available adapters are listed in the <a href="https://github.com/alanctkc/passup-adapters">passup-adapters repository</a>.</p>
@@ -141,9 +141,49 @@
             <div class="container">
                 <div class="row">
                     <div class="col col-sm-12">
+                        <h3>Updating Passwords</h3>
+                        <p>Rotate your passwords with the <code>passup</code> command:</p>
+                        <pre><code>
+    $ passup
+                        </code></pre>
+
+                        <p>To update only a single password group, call <code>passup</code> like this:</p>
+                        <pre><code>
+    $ passup --password=secure
+                        </code></pre>
+
+                        <p>Or, for a list of passwords:</p>
+                        <pre><code>
+    $ passup --password=secure,social,shopping
+                        </code></pre>
+
+                        <p>To update only a single adapter, use this command:</p>
+                        <pre><code>
+    $ passup --adapter=google
+                        </code></pre>
+
+                        <p>Or a list:</p>
+                        <pre><code>
+    $ passup --adapter=google,amazon
+                        </code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12">
                         <h3>How do the adapters stay updated?</h3>
                         <p>The adapters for various websites are maintained by the developers who use Passup. The more users that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone.</p>
                         <p>Adapters are written in a very simple <a href="http://docs.casperjs.org/en/latest/quickstart.html">CasperJS</a> syntax. Look <a href="https://github.com/alanctkc/passup-adapters">here</a> for examples. Please send pull requests to the <a href="https://github.com/alanctkc/passup-adapters">passup-adapters repository</a> on GitHub for any adapters you create! Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h4>Digging a little deeper</h4>
+                        <p>For more information on contributing adapters refer to the <a href="https://github.com/alanctkc/passup-adapters/blob/master/README.md">passup-adapters README</a>.</p>
                     </div>
                 </div>
             </div>
