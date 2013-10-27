@@ -20,11 +20,9 @@
                         <h1>Passup.js</h1>
                         <h2>A hacker's tool for keeping web passwords up-to-date.</h2>
                         <p><strong>Passup.js</strong> is a password updater built on CasperJS and PhantomJS that takes some of the pain out of rotating web passwords.</p>
-                        <p>
-                            <pre><code>
+                        <pre><code>
     $ npm install -g passup
-                            </code></pre>
-                        </p>
+                        </code></pre>
                     </div>
                     <div class="col col-sm-7 pull-left">
                         <script type="text/javascript" src="http://asciinema.org/a/6097.js" id="asciicast-6097" async></script>
@@ -32,6 +30,124 @@
                 </div>
             </div>
         </header>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h3>What is Passup.js?</h3>
+                        <p>Security experts recommend updating account passwords frequently to mitigate the damage inflicted by a compromised password. However, most of us maintain multiple web accounts and have hardly updated a handful of passwords before it's time to rotate again.</p>
+                        <p><strong>Passup.js</strong> is a password updater built on CasperJS and PhantomJS that takes some of the pain out of rotating web passwords.</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h4>How does it work?</h4>
+                        <p>Passup includes simple adapters for major websites and uses a headless web browser to automate the process of changing your passwords. Passup allows you to configure a list of sites you use for each password and update each group of sites by typing the password only once. So, for example, if you use the same password for all your social media sites and throwaway accounts, you can bulk update them with a single command.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h3>Getting Started</h3>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h4>Installation with npm</h4>
+                        <pre><code>
+    $ npm install -g passup
+    $ passup config
+    $ passup
+                        </code></pre>
+                        <h4>Installation with Vagrant</h4>
+                        <p>If you don't have Node.js installed or prefer <a href="http://www.vagrantup.com/">Vagrant</a>, it's pretty straightforward to run Passup inside a Vagrant virtual machine:</p>
+                        <pre><code>
+    $ git clone https://github.com/alanctkc/passup.js.git
+    $ cd passup.js
+    $ vagrant up
+                        </code></pre>
+                        <p>Once the machine is up and running, ssh in and configure Passup:</p>
+                        <pre><code>
+    $ vagrant ssh
+    $ passup config
+                        </code></pre>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h4>Configuration</h4>
+                        <p>Your Passup configuration is stored in <code>~/.passup.json</code> and looks something like this:</p>
+                        <pre><code class="json">
+{
+    "passwords": [
+        {
+            "name": "amazon-secure",
+            "sites": [
+                {
+                    "adapter": "amazon",
+                    "login": "user@email.com"
+                }
+            ]
+        },
+        {
+            "name": "github-secure",
+            "sites": [
+                {
+                    "adapter": "github",
+                    "login": "username"
+                }
+            ]
+        },
+        {
+            "name": "google-secure",
+            "sites": [
+                {
+                    "adapter": "google",
+                    "login": "user@email.com"
+                }
+            ]
+        },
+        {
+            "name": "mobile-friendly",
+            "sites": [
+                {
+                    "adapter": "facebook",
+                    "login": "user@email.com"
+                },
+                {
+                    "adapter": "hackerNews",
+                    "login": "username"
+                }
+            ]
+        }
+    ]
+}
+                        </code></pre>
+                        <p><strong class="really-strong">Passup.js will never store your passwords anywhere.</strong></p>
+                        <p>Your configuration contains groups of passwords and the sites that use that password. Most adapters only need a login, but it's possible to include more parameters needed for authentication. Check <a href="https://github.com/alanctkc/passup.js/blob/master/config.example.json">the example configuration</a> to see how each adapter is configured.</p>
+                        <p>You can name your password groups whatever you want, provided they only contain alphanumeric characters, dashes, and underscores.</p>
+                        <p>Available adapters are listed in the <a href="https://github.com/alanctkc/passup-adapters">passup-adapters repository</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="row">
+                    <div class="col col-sm-12">
+                        <h3>How do the adapters stay updated?</h3>
+                        <p>The adapters for various websites are maintained by the developers who use Passup. The more users that contribute Passup.js adapters and use them for their own accounts, the more valuable the repository becomes for everyone.</p>
+                        <p>Adapters are written in a very simple <a href="http://docs.casperjs.org/en/latest/quickstart.html">CasperJS</a> syntax. Look <a href="https://github.com/alanctkc/passup-adapters">here</a> for examples. Please send pull requests to the <a href="https://github.com/alanctkc/passup-adapters">passup-adapters repository</a> on GitHub for any adapters you create! Additionally, if you find a way to improve an existing adapter, please feel free to submit your contribution.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
 
         <script src="js/highlight.min.js"></script>
         <script>hljs.initHighlightingOnLoad();</script>
