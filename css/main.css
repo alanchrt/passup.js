@@ -1,7 +1,6 @@
 body {
     background: #ddd;
     line-height: 2.0em;
-    margin-bottom: 60px;
 }
 
 header {
@@ -40,4 +39,11 @@ header pre {
 
 strong.really-strong {
     font-size: 1.2em;
+}
+
+footer {
+    background-color: #2c2c2c;
+    padding: 30px;
+    margin-top: 30px;
+    color: #eee;
 }
