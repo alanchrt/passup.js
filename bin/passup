@@ -1,16 +1,18 @@
 #!/usr/bin/env node
 
-var fs = require('fs');
-var path = require('path');
-var spawn = require('child_process').spawn;
-var program = require('commander');
-var phantomjs = require('phantomjs');
+var fs = require('fs'),
+    path = require('path'),
+    spawn = require('child_process').spawn,
+    program = require('commander'),
+    phantomjs = require('phantomjs'),
+    shell = require('shelljs');
 
 var paths = {
     home: process.env[(process.platform === 'win32')? 'USERPROFILE' : 'HOME'],
     configExample: path.join(__dirname, '../config.example.json'),
     configInitial: path.join(__dirname, '../config.initial.json'),
     adapters: path.join(__dirname, '../adapters'),
+    adaptersGit: 'https://github.com/alanctkc/passup.js.git',
     casperjs: path.join(__dirname, '../node_modules/casperjs/bin'),
     init: path.join(__dirname, '../init.js')
 };
@@ -46,29 +48,11 @@ program.command('config')
         source.pipe(target);
 
         // Open the file for editing
-        var textEditor = process.env.VISUAL || process.env.EDITOR || 'nano';
-        args = [textEditor, paths.config];
-        spawn('/usr/bin/env', args, {
-            stdio: 'inherit'
-        });
-    });
-
-program.command('update')
-    .description("clones the adapters git repository")
-    .action(function updateCommand() {
-        var args = [];
-        if (!fs.existsSync(paths.adapters)) {
-            // Clone the adapters repository
-            args = ['git', 'clone', 'https://github.com/alanctkc/passup-adapters.git', paths.adapters];
+        var textEditor = process.env.VISUAL || process.env.EDITOR || 'vi';
+        if (shell.which(textEditor)) {
+            args = [textEditor, paths.config];
             spawn('/usr/bin/env', args, {
                 stdio: 'inherit'
-            });
-        } else {
-            // Update the adapters repository
-            args = ['git', 'pull', 'origin', 'master'];
-            spawn('/usr/bin/env', args, {
-                stdio: 'inherit',
-                cwd: paths.adapters
             });
         }
     });
@@ -79,8 +63,7 @@ program.parse(process.argv);
 // Run passup
 var shouldRun = true;
 if (program.rawArgs.length > 2) {
-    shouldRun = (program.rawArgs[2] != 'config' &&
-        program.rawArgs[2] != 'update');
+    shouldRun = (program.rawArgs[2] != 'config');
 }
 
 if (shouldRun) {
@@ -91,11 +74,26 @@ if (shouldRun) {
         process.exit();
     }
 
-    // Check for adapters
+    // update adapters
     if (!fs.existsSync(paths.adapters)) {
         // Clone the adapters repository
-        console.log("No adapters found. Use command 'passup update' to update to the latest adapters.");
-        process.exit();
+        var result = shell.exec(['git clone ',
+            paths.adaptersGit, ' ', paths.adapters].join(''));
+
+        if (result.code !== 0) {
+            // git clone failed
+            console.log("Failed to clone adapters.");
+            process.exit();
+        }
+    } else {
+        // pull adapters
+        shell.cd(paths.adapters);
+        var result = shell.exec('git pull origin master');
+
+        if (result.code !== 0) {
+            // git pull failed
+            console.log("Failed to pull adapters.");
+        }
     }
 
     // Add dependency binaries to environment
