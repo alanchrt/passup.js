@@ -1,46 +1,46 @@
 {
-    "name": "passup",
-    "version": "0.9.0",
-    "description": "A password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.",
-    "author": "Alan C. Thomas <alan@alanct.com> (http://alanct.com/)",
-    "license": "BSD",
-    "homepage": "https://github.com/alanctkc/passup.js",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/alanctkc/passup.js"
-    },
-    "keywords": [
-        "passup",
-        "passup.js",
-        "password",
-        "passwords",
-        "update",
-        "updates",
-        "updater",
-        "updating",
-        "rotate",
-        "rotator",
-        "rotater",
-        "rotating",
-        "security"
-    ],
-    "bugs": {
-        "url": "https://github.com/alanctkc/passup.js/issues"
-    },
-    "preferGlobal": true,
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "dependencies": {
-        "phantomjs": "~1.9.0",
-        "casperjs": "git://github.com/n1k0/casperjs",
-        "commander": "~1.3.0"
-    },
-    "bin" : {
-        "passup": "bin/passup"
-    },
-    "scripts": {
-        "test": "echo \"Error: no test specified\" && exit 1"
-    },
-    "preferGlobal": true
+  "name": "passup",
+  "version": "0.9.0",
+  "description": "A password updater built on CasperJS and PhantomJS that takes some of the pain out of updating web passwords.",
+  "author": "Alan C. Thomas <alan@alanct.com> (http://alanct.com/)",
+  "license": "BSD",
+  "homepage": "https://github.com/alanctkc/passup.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/alanctkc/passup.js"
+  },
+  "keywords": [
+    "passup",
+    "passup.js",
+    "password",
+    "passwords",
+    "update",
+    "updates",
+    "updater",
+    "updating",
+    "rotate",
+    "rotator",
+    "rotater",
+    "rotating",
+    "security"
+  ],
+  "bugs": {
+    "url": "https://github.com/alanctkc/passup.js/issues"
+  },
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "dependencies": {
+    "phantomjs": "~1.9.0",
+    "casperjs": "git://github.com/n1k0/casperjs",
+    "commander": "~1.3.0",
+    "shelljs": "~0.2.6"
+  },
+  "bin": {
+    "passup": "bin/passup"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
 }
